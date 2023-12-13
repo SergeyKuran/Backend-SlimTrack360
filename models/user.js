@@ -35,6 +35,28 @@ const userParamsSchema = new Schema(
       type: Number,
       enum: userParametrs.levelActivityTypes,
     },
+    dailyGoalCalories: {
+      type: Number,
+      default: null,
+    },
+    dailtyGoalWater: {
+      type: Number,
+      default: null,
+    },
+    dailyGoalElements: {
+      Carbonohidrates: {
+        type: Number,
+        default: null,
+      },
+      Protein: {
+        type: Number,
+        default: null,
+      },
+      Fat: {
+        type: Number,
+        default: null,
+      },
+    },
   },
   { versionKey: false, _id: false },
 );
