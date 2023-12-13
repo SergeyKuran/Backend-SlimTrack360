@@ -7,6 +7,10 @@ const router = Router();
 
 // ------ Sign Up ----------- //
 
-router.post('/signup', authController.signup);
+router.post(
+  '/signup',
+  bodyValidator(userSchemas.registrationSchema),
+  authController.signup,
+);
 
 export default router;
