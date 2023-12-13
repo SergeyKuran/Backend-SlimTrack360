@@ -8,7 +8,7 @@ const registrationSchema = Joi.object({
   }),
   password: Joi.string().pattern(passwordRegExp).required().messages({
     'string.pattern.base':
-      'Password should be at least 6 symbols and contain one capital letter and one special character',
+      'Password should be at least 6 symbols and contain at least one capital letter, one lowercase letter, and one special character.',
   }),
 });
 
