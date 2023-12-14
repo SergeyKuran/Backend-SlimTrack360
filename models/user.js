@@ -102,7 +102,7 @@ const userSchema = new Schema(
     },
     userParams: {
       type: userParamsSchema,
-      default: null,
+      require: true,
     },
   },
   { timeseries: true, versionKey: false },
