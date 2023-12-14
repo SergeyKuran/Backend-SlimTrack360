@@ -49,29 +49,38 @@ const oneInTakeSchema = new Schema({
   ],
 });
 
-const userFoodIntakeSchema = new Schema({
-  date: {
-    type: String,
-    default: '',
-    require: true,
+const userFoodIntakeSchema = new Schema(
+  {
+    date: {
+      type: String,
+      default: '',
+      require: true,
+    },
+    breackfast: {
+      type: oneInTakeSchema,
+      default: null,
+    },
+    lunch: {
+      type: oneInTakeSchema,
+      default: null,
+    },
+    dinner: {
+      type: oneInTakeSchema,
+      default: null,
+    },
+    snack: {
+      type: oneInTakeSchema,
+      default: null,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+      select: false,
+    },
   },
-  breackfast: {
-    type: oneInTakeSchema,
-    default: null,
-  },
-  lunch: {
-    type: oneInTakeSchema,
-    default: null,
-  },
-  dinner: {
-    type: oneInTakeSchema,
-    default: null,
-  },
-  snack: {
-    type: oneInTakeSchema,
-    default: null,
-  },
-});
+  { versionKey: false },
+);
 
 userFoodIntakeSchema.post('save', handleMongooseError);
 
