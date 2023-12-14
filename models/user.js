@@ -44,15 +44,15 @@ const userParamsSchema = new Schema(
       default: 0,
     },
     dailyGoalElements: {
-      Carbonohidrates: {
+      carbonohidrates: {
         type: Number,
         default: 0,
       },
-      Protein: {
+      protein: {
         type: Number,
         default: 0,
       },
-      Fat: {
+      fat: {
         type: Number,
         default: 0,
       },
