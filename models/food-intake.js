@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { handleMongooseError } from '../helpers/Error/handleMongooseError';
+import { handleMongooseError } from '../helpers/Error/handleMongooseError.js';
 
 const oneInTakeSchema = new Schema({
   totalCalories: {
@@ -56,7 +56,7 @@ const userFoodIntakeSchema = new Schema(
       default: '',
       require: true,
     },
-    breackfast: {
+    breakfast: {
       type: oneInTakeSchema,
       default: null,
     },
