@@ -7,7 +7,7 @@ import {
 import { handleMongooseError } from '../helpers/Error/handleMongooseError.js';
 
 // ----------- Schema for User Params Model -----------//
-const userParamsSchema = new Schema(
+export const userParamsSchema = new Schema(
   {
     goal: {
       type: String,
@@ -103,6 +103,54 @@ const userSchema = new Schema(
     userParams: {
       type: userParamsSchema,
       default: null,
+    },
+    goal: {
+      type: String,
+      require: true,
+      enum: userParametrs.userSexusersGoal,
+      default: 'Lose Fat',
+    },
+    sex: {
+      type: String,
+      enum: userParametrs.userSex,
+    },
+    age: {
+      type: Number,
+      require: true,
+    },
+    height: {
+      type: Number,
+      min: userParametrs.minHeight,
+    },
+    currentWeight: {
+      type: Number,
+      min: userParametrs.minCurrentWeight,
+    },
+    levelActivity: {
+      type: Number,
+      enum: userParametrs.levelActivityTypes,
+    },
+    dailyGoalCalories: {
+      type: Number,
+      default: null,
+    },
+    dailtyGoalWater: {
+      type: Number,
+      default: null,
+    },
+    dailyGoalElements: {
+      Carbonohidrates: {
+        type: Number,
+        default: null,
+      },
+      Protein: {
+        type: Number,
+        default: null,
+      },
+      Fat: {
+        type: Number,
+        default: null,
+      },
     },
   },
   { timeseries: true, versionKey: false },
