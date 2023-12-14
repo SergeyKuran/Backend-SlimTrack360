@@ -37,24 +37,24 @@ const userParamsSchema = new Schema(
     },
     dailyGoalCalories: {
       type: Number,
-      default: null,
+      default: 0,
     },
-    dailtyGoalWater: {
+    dailyGoalWater: {
       type: Number,
-      default: null,
+      default: 0,
     },
     dailyGoalElements: {
       Carbonohidrates: {
         type: Number,
-        default: null,
+        default: 0,
       },
       Protein: {
         type: Number,
-        default: null,
+        default: 0,
       },
       Fat: {
         type: Number,
-        default: null,
+        default: 0,
       },
     },
   },
