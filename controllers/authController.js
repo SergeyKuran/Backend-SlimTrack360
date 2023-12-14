@@ -21,8 +21,11 @@ const signout = async (req, res, next) => {
   res.json({ message: 'Logout successful' });
 };
 
+const current = async (req, res, next) => {};
+
 export default {
   signup: ctrlWrapper(signUp),
   signin: ctrlWrapper(signIn),
   signout: ctrlWrapper(signout),
+  current: ctrlWrapper(current),
 };
