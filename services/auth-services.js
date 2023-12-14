@@ -5,7 +5,7 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { nanoid } from 'nanoid';
 
-const { JWT_SECRET } = process.env;
+const { SECRET_KEY } = process.env;
 
 const signUp = async body => {
   const { email, password } = body;
@@ -29,11 +29,7 @@ const signIn = async body => {
   const userFind = await User.findOne({ email: body.email });
 
   if (!userFind) throw HttpError(403, 'Email or password is wrong');
-
-  const comparePassword = await bcryptjs.compare(
-    body.password,
-    userFind.password,
-  );
+  const comparePassword = bcryptjs.compare(body.password, userFind.password);
 
   if (!comparePassword) {
     throw HttpError(403, 'Email or password is wrong');
@@ -43,14 +39,9 @@ const signIn = async body => {
     id: userFind._id,
   };
 
-  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '23h' });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
 
-  const user = await User.findByIdAndUpdate(userFind._id, { token });
-
-  return {
-    token,
-    user,
-  };
+  return await User.findByIdAndUpdate(userFind._id, { token });
 };
 
 const logout = async userId => {
