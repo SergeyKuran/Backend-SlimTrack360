@@ -1,17 +1,26 @@
-import { User } from '../models/user.js';
-import { HttpError } from '../helpers/Error/HttpError.js';
-
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { dayNormaWater } from '../decorators/dayNormaWater.js';
+import { determinationDailyLevel } from '../decorators/determinationDailyLevel.js';
 import { nanoid } from 'nanoid';
+import { User } from '../models/user.js';
+import { HttpError } from '../helpers/Error/HttpError.js';
+import { calculateMacros } from '../decorators/calculateMacroElem.js';
 
 const { SECRET_KEY } = process.env;
 
 const signUp = async body => {
-  const { email, password } = body;
+  const { email, password, levelActivity, currentWeight, goal } = body;
 
   const user = await User.findOne({ email });
   if (user) throw HttpError(409, `Email "${email}" in use`);
+
+  const dailtyGoalWater = dayNormaWater(levelActivity, currentWeight);
+  const dailyGoalCalories = determinationDailyLevel(body);
+  const { Protein, Fat, Carbonohidrates } = calculateMacros(
+    goal,
+    dailyGoalCalories,
+  );
 
   const hashPassword = await bcryptjs.hash(password, 10);
   const verificationToken = nanoid();
@@ -22,6 +31,9 @@ const signUp = async body => {
     password: hashPassword,
     verificationToken,
     date: date.getDate(),
+    dailtyGoalWater,
+    dailyGoalCalories,
+    dailyGoalElements: { Protein, Fat, Carbonohidrates },
   });
 };
 
