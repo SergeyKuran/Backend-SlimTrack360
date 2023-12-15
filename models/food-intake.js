@@ -85,3 +85,16 @@ const userFoodIntakeSchema = new Schema(
 userFoodIntakeSchema.post('save', handleMongooseError);
 
 export const FoodIntake = model('foodIntake', userFoodIntakeSchema);
+
+// Приклади
+
+// $inc $push
+
+// data = await Diary.findByIdAndUpdate(
+//   foundedDiary._id,
+//   {
+//     $inc: { burnedCalories: +calories, sportTime: +time },
+//     $push: { doneExercises: { exercise, time, calories } },
+//   },
+//   { new: true },
+// );
