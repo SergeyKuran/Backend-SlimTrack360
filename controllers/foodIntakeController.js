@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { FoodIntake } from '../models/food-intake.js';
+import { updateIntakeTotals } from '../helpers/foodIntake.js/updateTotals.js';
 
 const addFoodIntake = async (req, res, next) => {
   const { date, breakfast, lunch, dinner, snack } = req.body;
@@ -35,7 +36,7 @@ const addFoodIntake = async (req, res, next) => {
     if (snack) existingIntake.snack.products.push(...snack.products);
 
     await existingIntake.save();
-
+    await updateIntakeTotals(existingIntake);
     existingIntake = await FoodIntake.findOne({ date: formattedDate, owner });
     res.status(200).json({
       message: 'Products added to existing entry',
@@ -52,6 +53,7 @@ const addFoodIntake = async (req, res, next) => {
       owner,
     });
     await newFoodIntake.save();
+    await updateIntakeTotals(newFoodIntake);
 
     const createdIntake = await FoodIntake.findOne({
       date: formattedDate,
