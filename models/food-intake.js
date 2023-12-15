@@ -21,7 +21,7 @@ const oneInTakeSchema = new Schema({
   products: [
     {
       productId: {
-        type: Schema.Types.String,
+        type: String,
         ref: 'product',
         require: [true, 'ID is required'],
       },
@@ -45,6 +45,7 @@ const oneInTakeSchema = new Schema({
         type: Number,
         require: [true, 'carbonohidretes is required'],
       },
+      _id: false,
     },
   ],
 });
@@ -59,18 +60,22 @@ const userFoodIntakeSchema = new Schema(
     breakfast: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     lunch: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     dinner: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     snack: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     owner: {
       type: Schema.Types.ObjectId,
