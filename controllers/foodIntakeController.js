@@ -5,7 +5,7 @@ import { FoodIntake } from '../models/food-intake.js';
 const addFoodIntake = async (req, res, nex) => {
   const { _id: owner } = req.user;
 
-  console.log('Date >>:', req.body);
+  console.log('Request Body Date:', req.body.date);
 
   req.body.date = format(new Date(req.body.date), 'yyyy-MM-dd');
 
@@ -15,7 +15,15 @@ const addFoodIntake = async (req, res, nex) => {
       owner,
     });
 
-  res.status(200).json({ date, breakfast, lunch, dinner, snack, _id });
+  res.status(200).json({
+    date,
+    breakfast,
+    lunch,
+    dinner,
+    snack,
+    owner,
+    _id,
+  });
 };
 
 export default {

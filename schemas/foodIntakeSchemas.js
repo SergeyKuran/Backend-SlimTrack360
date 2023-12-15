@@ -1,8 +1,8 @@
 import Joi from 'joi';
 
-const foodIntakeSchema = Joi.object({
-  date: Joi.string().required,
-  breackfast: Joi.object({
+const addFoodIntakeSchema = Joi.object({
+  date: Joi.date().max('now').required(),
+  breakfast: Joi.object({
     products: Joi.array().items(
       Joi.object({
         productId: Joi.string().required(),
@@ -51,3 +51,5 @@ const foodIntakeSchema = Joi.object({
     ),
   }).optional(),
 });
+
+export default addFoodIntakeSchema;
