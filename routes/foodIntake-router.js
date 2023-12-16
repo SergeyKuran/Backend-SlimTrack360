@@ -6,7 +6,7 @@ import FoodIntakeSchema from '../schemas/foodIntakeSchemas.js';
 
 const router = Router();
 
-router.use(authenticate);
+// router.use(authenticate);
 
 router.post(
   '/food-intake',
