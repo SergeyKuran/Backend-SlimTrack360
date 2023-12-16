@@ -1,4 +1,5 @@
-export const calculateMacros = (goal, calories) => {
+export const calculateMacros = user => {
+  const { goal, dailyGoalCalories } = user;
   let proteinPercentage, fatPercentage, carbPercentage;
 
   switch (goal) {
@@ -21,9 +22,9 @@ export const calculateMacros = (goal, calories) => {
 
   carbPercentage = 1 - (proteinPercentage + fatPercentage);
 
-  const Protein = Math.round((proteinPercentage * calories) / 4);
-  const Fat = Math.round((fatPercentage * calories) / 9);
-  const Carbonohidrates = Math.round((carbPercentage * calories) / 4);
+  const Protein = Math.round((proteinPercentage * dailyGoalCalories) / 4);
+  const Fat = Math.round((fatPercentage * dailyGoalCalories) / 9);
+  const Carbonohidrates = Math.round((carbPercentage * dailyGoalCalories) / 4);
 
   return { Protein, Fat, Carbonohidrates };
 };

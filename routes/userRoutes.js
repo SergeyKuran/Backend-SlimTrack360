@@ -6,4 +6,10 @@ const router = Router();
 
 router.get('/current', authenticate, userController.current);
 
+router.put('/update', authenticate, userController.update);
+
+router.put('/goal', authenticate, userController.goal);
+
+router.post('/weight', authenticate, userController.weight);
+
 export default router;

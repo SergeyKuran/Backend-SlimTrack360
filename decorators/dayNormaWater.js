@@ -6,21 +6,23 @@ const activityIndex = {
   5: 1.9,
 };
 
-export const dayNormaWater = (levelActivity, currentWeight) => {
+export const dayNormaWater = user => {
+  const { levelActivity, currentWeight } = user;
+
   if (levelActivity in activityIndex) {
     const activeIndex = activityIndex[levelActivity];
 
     switch (activeIndex) {
       case 1.2:
-        return currentWeight * 0.03;
+        return (currentWeight * 0.03).toFixed(1);
       case 1.375:
-        return currentWeight * 0.03 + 0.35;
+        return (currentWeight * 0.03 + 0.35).toFixed(1);
       case 1.55:
-        return currentWeight * 0.03 + 0.35;
+        return (currentWeight * 0.03 + 0.35).toFixed(1);
       case 1.725:
-        return currentWeight * 0.03 + 0.35;
+        return (currentWeight * 0.03 + 0.35).toFixed(1);
       case 1.9:
-        return currentWeight * 0.03 + 0.7;
+        return (currentWeight * 0.03 + 0.7).toFixed(1);
 
       default:
         break;
