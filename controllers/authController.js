@@ -1,6 +1,4 @@
-import { User } from '../models/user.js';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
-import { HttpError } from '../helpers/Error/HttpError.js';
 import authServices from '../services/auth-services.js';
 
 const signUp = async (req, res, next) => {
