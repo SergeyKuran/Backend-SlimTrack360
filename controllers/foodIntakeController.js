@@ -15,7 +15,7 @@ const addFoodIntake = async (req, res, next) => {
   });
 
   if (existingIntake) {
-    // Update existing entry
+    // -------------- Update existing entry --------------- //
     if (!existingIntake.breakfast) {
       existingIntake.breakfast = { products: [] };
     }
@@ -43,7 +43,7 @@ const addFoodIntake = async (req, res, next) => {
       data: existingIntake,
     });
   } else {
-    // Create new entry
+    // ------------ Create new entry --------------- //
     const newFoodIntake = new FoodIntake({
       date: formattedDate,
       breakfast: breakfast || { products: [] },
@@ -69,7 +69,6 @@ const deleteFoodIntake = async (req, res, next) => {
 
   const formattedDate = format(new Date(date), 'yyyy-MM-dd');
 
-  // Проверяем какой раздел был указан в запросе и получаем его
   let updatedIntake = null;
   let section = null;
 

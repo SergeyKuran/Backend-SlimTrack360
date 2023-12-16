@@ -1,4 +1,4 @@
-import { userParametrs } from '../constans/user-constants.js';
+import { userParametrs } from '../constans/userConstants.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
 
 export const determinationDailyLevel = user => {
