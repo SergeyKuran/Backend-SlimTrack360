@@ -3,7 +3,7 @@ import {
   emailRegexp,
   passwordMinLength,
   userParametrs,
-} from '../constans/user-constants.js';
+} from '../constans/userConstants.js';
 import { handleMongooseError } from '../helpers/Error/handleMongooseError.js';
 
 // ----------- Schema for User Params Model -----------//

@@ -1,5 +1,6 @@
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
-import userServices from '../services/user-services.js';
+import { HttpError } from '../helpers/Error/HttpError.js';
+import userServices from '../services/userServices.js';
 
 const current = async (req, res, next) => {
   const {

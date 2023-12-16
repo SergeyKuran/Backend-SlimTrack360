@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { handleMongooseError } from '../helpers/Error/handleMongooseError';
+import { handleMongooseError } from '../helpers/Error/handleMongooseError.js';
 
 const oneInTakeSchema = new Schema({
   totalCalories: {
@@ -21,7 +21,7 @@ const oneInTakeSchema = new Schema({
   products: [
     {
       productId: {
-        type: Schema.Types.String,
+        type: String,
         ref: 'product',
         require: [true, 'ID is required'],
       },
@@ -45,6 +45,7 @@ const oneInTakeSchema = new Schema({
         type: Number,
         require: [true, 'carbonohidretes is required'],
       },
+      _id: false,
     },
   ],
 });
@@ -56,21 +57,25 @@ const userFoodIntakeSchema = new Schema(
       default: '',
       require: true,
     },
-    breackfast: {
+    breakfast: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     lunch: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     dinner: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     snack: {
       type: oneInTakeSchema,
       default: null,
+      _id: false,
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -85,3 +90,16 @@ const userFoodIntakeSchema = new Schema(
 userFoodIntakeSchema.post('save', handleMongooseError);
 
 export const FoodIntake = model('foodIntake', userFoodIntakeSchema);
+
+// Приклади
+
+// $inc $push
+
+// data = await Diary.findByIdAndUpdate(
+//   foundedDiary._id,
+//   {
+//     $inc: { burnedCalories: +calories, sportTime: +time },
+//     $push: { doneExercises: { exercise, time, calories } },
+//   },
+//   { new: true },
+// );
