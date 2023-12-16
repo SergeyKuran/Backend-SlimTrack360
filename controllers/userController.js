@@ -1,7 +1,7 @@
 import { User } from '../models/user.js';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
-import userServices from '../services/user-services.js';
+import userServices from '../services/userServices.js';
 
 const current = async (req, res, next) => {
   console.log('req.user.name :>> ', req.user.name);

@@ -1,10 +1,10 @@
 import express, { json } from 'express';
 import logger from 'morgan';
 import cors from 'cors';
-import authRouter from './routes/auth-router.js';
-import userRouter from './routes/user-routes.js';
+import authRouter from './routes/authRouter.js';
+import userRouter from './routes/userRoutes.js';
 import recommendedFoodRouter from './routes/recommendedFood.js';
-import foodIntakeRouter from './routes/foodIntake-router.js';
+import foodIntakeRouter from './routes/foodIntakeRouter.js';
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';

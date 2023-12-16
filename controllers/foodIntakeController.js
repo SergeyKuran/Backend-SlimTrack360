@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
-import { FoodIntake } from '../models/food-intake.js';
+import { FoodIntake } from '../models/foodIntake.js';
 import { updateIntakeTotals } from '../helpers/foodIntake.js/updateTotals.js';
 
 const addFoodIntake = async (req, res, next) => {

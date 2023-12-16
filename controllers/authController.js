@@ -1,7 +1,7 @@
 import { User } from '../models/user.js';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
-import authServices from '../services/auth-services.js';
+import authServices from '../services/authServices.js';
 
 const signUp = async (req, res, next) => {
   const newUser = await authServices.signUp(req.body);
