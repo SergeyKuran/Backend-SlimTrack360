@@ -11,7 +11,7 @@ const current = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
   } = await userServices.currentUser(req.user._id);
 
@@ -24,7 +24,7 @@ const current = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
   });
 };
@@ -39,7 +39,7 @@ const update = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
   } = await userServices.updateUser(
     req.user._id,
@@ -56,7 +56,7 @@ const update = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
   });
 };
