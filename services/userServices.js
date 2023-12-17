@@ -12,25 +12,25 @@ const currentUser = async userId => {
   return userFind;
 };
 
-const updateUser = async (userId, updatedFields, userData) => {
-  const user = { ...userData, ...updatedFields };
+const updateUser = async (userId, userData, pathAvatar) => {
+  const user = { ...userData };
 
   const newUser = await User.findByIdAndUpdate(
     { _id: userId },
-    { $set: user },
+    { $set: user, avatarUrl: pathAvatar },
     { new: true },
   );
 
   const newDailyLevel = determinationDailyLevel(newUser);
   const newNormaWater = dayNormaWater(newUser);
-  const { Protein, Fat, Carbonohidrates } = calculateMacros(newUser);
+  const { protein, fat, carbonohidrates } = calculateMacros(newUser);
 
   const updatedUser = await User.findByIdAndUpdate(
     { _id: userId },
     {
       dailyGoalCalories: newDailyLevel,
       dailtyGoalWater: newNormaWater,
-      dailyGoalElements: { Protein, Fat, Carbonohidrates },
+      dailyGoalElements: { protein, fat, carbonohidrates },
     },
     { new: true },
   );
