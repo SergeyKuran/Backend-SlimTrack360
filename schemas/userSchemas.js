@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { emailRegexp, passwordRegExp } from '../constans/userConstants.js';
 
-const registrationSchema = Joi.object({
+const registration = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().pattern(emailRegexp).required().messages({
     'string.pattern.base': 'Email format should be - example@example.com',
@@ -18,14 +18,56 @@ const registrationSchema = Joi.object({
   levelActivity: Joi.number().required(),
 });
 
-const loginSchema = Joi.object({
+const login = Joi.object({
   email: Joi.string().pattern(emailRegexp).required().messages({
     'string.pattern.base': 'Email format should be - example@example.com',
   }),
-  password: Joi.string(),
+  password: Joi.string().required().messages({
+    'string.pattern.base':
+      'Password should be at least 6 symbols and contain at least one capital letter, one lowercase letter, and one special character.',
+  }),
 });
 
-export default {
-  registrationSchema,
-  loginSchema,
+const passwordReset = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required().messages({
+    'string.pattern.base': 'Email format should be - example@example.com',
+  }),
+});
+
+const current = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  avatarUrl: Joi.string(),
+  age: Joi.number(),
+  height: Joi.number(),
+  currentWeight: Joi.number(),
+});
+
+const update = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  avatarUrl: Joi.string(),
+  age: Joi.number(),
+  height: Joi.number(),
+  currentWeight: Joi.number(),
+});
+
+const goal = Joi.object({
+  goal: Joi.string().required(),
+});
+
+const weight = Joi.object({
+  currentWeight: Joi.number().required(),
+});
+
+const schema = {
+  registration,
+  login,
+  passwordReset,
+  update,
+  goal,
+  weight,
+  current,
 };
+
+export default schema;
