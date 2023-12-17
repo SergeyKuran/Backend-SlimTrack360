@@ -1,5 +1,4 @@
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
-import { HttpError } from '../helpers/Error/HttpError.js';
 import userServices from '../services/userServices.js';
 
 const current = async (req, res, next) => {
@@ -42,7 +41,11 @@ const update = async (req, res, next) => {
     dailyGoalCalories,
     dailtyGoalWater,
     dailyGoalElements,
-  } = await userServices.updateUser(req.user._id, req.body);
+  } = await userServices.updateUser(
+    req.user._id,
+    req.body,
+    req.file ? req.file.path : '',
+  );
 
   res.json({
     name,
@@ -63,6 +66,7 @@ const goal = async (req, res, next) => {
 
   res.json({
     goal,
+    message: 'Goal changed',
   });
 };
 
@@ -74,6 +78,7 @@ const weight = async (req, res, next) => {
 
   res.json({
     currentWeight,
+    message: 'Weight changed',
   });
 };
 
