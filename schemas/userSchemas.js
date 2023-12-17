@@ -10,7 +10,7 @@ const registration = Joi.object({
     'string.pattern.base':
       'Password should be at least 6 symbols and contain at least one capital letter, one lowercase letter, and one special character.',
   }),
-  goal: Joi.string(),
+  goal: Joi.string().required(),
   sex: Joi.string().required(),
   age: Joi.number().required(),
   height: Joi.number().required(),
