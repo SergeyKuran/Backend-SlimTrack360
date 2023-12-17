@@ -9,3 +9,7 @@ export const AddWaterIntakeSchema = Joi.object({
   date: Joi.date().max('now').required(),
   value: Joi.number().required().messages(errorMessages),
 });
+
+export const getWaterIntakeSchema = Joi.object({
+  date: Joi.date().max('now').required(),
+});

@@ -2,22 +2,16 @@ import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { WaterIntake } from '../models/waterIntake.js';
 
 const getCurrentWaterIntake = async (req, res) => {
-  try {
-    const { date } = req.body;
-    const { _id: owner } = req.user;
+  const { date } = req.body;
+  const { _id: owner } = req.user;
 
-    // Ищем объект по дате и владельцу
-    const waterIntake = await WaterIntake.findOne({ date, owner });
+  const waterIntake = await WaterIntake.findOne({ date, owner });
 
-    if (!waterIntake) {
-      return res.status(404).json({ message: 'Water intake not found' });
-    }
-
-    return res.status(200).json(waterIntake);
-  } catch (error) {
-    // Обработка ошибок, если они возникнут
-    return res.status(500).json({ message: 'Internal Server Error' });
+  if (!waterIntake) {
+    return res.status(404).json({ message: 'Water intake not found' });
   }
+
+  res.status(200).json(waterIntake);
 };
 
 const addWaterIntake = async (req, res) => {
