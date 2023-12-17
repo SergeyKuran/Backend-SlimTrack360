@@ -56,6 +56,17 @@ const signIn = async body => {
   return await User.findByIdAndUpdate(userFind._id, { token });
 };
 
+const passwordReset = async body => {
+  const { email, _id } = body;
+
+  const userFind = await User.findOne({ email });
+  if (!userFind) throw HttpError(404, 'Sorry, user not found');
+
+  await User.findByIdAndUpdate({ _id }, { email });
+
+  return email;
+};
+
 const logout = async userId => {
   const user = await User.findByIdAndUpdate({ _id: userId }, { token: '' });
   if (!user) throw HttpError(404, 'User not found');
@@ -64,6 +75,7 @@ const logout = async userId => {
 const authServices = {
   signUp,
   signIn,
+  passwordReset,
   logout,
 };
 
