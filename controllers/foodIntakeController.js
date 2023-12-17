@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { FoodIntake } from '../models/foodIntake.js';
 import { updateIntakeTotals } from '../helpers/foodIntake.js/updateTotals.js';
+import { ObjectId } from 'mongodb';
 
 const addFoodIntake = async (req, res, next) => {
   const { date, breakfast, lunch, dinner, snack } = req.body;
@@ -63,43 +64,51 @@ const addFoodIntake = async (req, res, next) => {
 
 const updateProductFoodIntake = async (req, res, next) => {
   try {
-    const { id: foodIntakeId } = req.params;
+    const { id } = req.params;
+    const { breakfast, lunch, dinner, snack } = req.body;
 
-    const { productId, updatedFields } = req.body;
-    const { owner } = req.user;
+    let existingFoodIntake = await FoodIntake.findById(id);
 
-    const sectionToUpdate = req.params.section;
-
-    if (!['breakfast', 'lunch', 'dinner', 'snack'].includes(sectionToUpdate)) {
-      return res.status(400).json({ message: 'Invalid section provided' });
+    if (!existingFoodIntake) {
+      console.log('Food Intake not found');
+      return res.status(404).json({ message: 'Food Intake not found' });
     }
 
-    const filter = { _id: foodIntakeId, owner };
-    filter[`${sectionToUpdate}.products.productId`] = productId;
+    const updateProducts = (existingProducts, updatedProducts) => {
+      updatedProducts.forEach(updatedProduct => {
+        const existingProductIndex = existingProducts.findIndex(
+          product => product.productId === updatedProduct.productId,
+        );
+        if (existingProductIndex !== -1) {
+          existingProducts[existingProductIndex] = updatedProduct;
+        } else {
+          existingProducts.push(updatedProduct);
+        }
+      });
+    };
 
-    const update = { $set: {} };
-    update.$set[`${sectionToUpdate}.products.$`] = updatedFields;
-
-    const options = { new: true };
-
-    let updatedFoodIntake = await FoodIntake.findOneAndUpdate(
-      filter,
-      update,
-      options,
-    );
-
-    await updateIntakeTotals(updatedFoodIntake);
-
-    if (!updatedFoodIntake) {
-      console.log('Product not found or Food Intake not found');
-      return res
-        .status(404)
-        .json({ message: 'Food Intake not found or product not found' });
+    if (breakfast && breakfast.products && breakfast.products.length > 0) {
+      updateProducts(existingFoodIntake.breakfast.products, breakfast.products);
     }
+
+    if (lunch && lunch.products && lunch.products.length > 0) {
+      updateProducts(existingFoodIntake.lunch.products, lunch.products);
+    }
+
+    if (dinner && dinner.products && dinner.products.length > 0) {
+      updateProducts(existingFoodIntake.dinner.products, dinner.products);
+    }
+
+    if (snack && snack.products && snack.products.length > 0) {
+      updateProducts(existingFoodIntake.snack.products, snack.products);
+    }
+
+    await updateIntakeTotals(existingFoodIntake);
+    existingFoodIntake = await existingFoodIntake.save();
 
     res
       .status(200)
-      .json({ message: 'Product updated', data: updatedFoodIntake });
+      .json({ message: 'Food Intake updated', data: existingFoodIntake });
   } catch (error) {
     next(error);
   }
