@@ -16,8 +16,8 @@ router.post(
 
 router.put(
   '/food-intake/:id',
-  bodyValidator(FoodIntakeSchema.FoodIntakeSchema),
-  foodIntakeController.addFood,
+  bodyValidator(FoodIntakeSchema.UpdateFoodIntakeSchema),
+  foodIntakeController.updateFood,
 );
 
 router.delete(

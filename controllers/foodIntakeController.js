@@ -61,80 +61,105 @@ const addFoodIntake = async (req, res, next) => {
   }
 };
 
-const updateProductFoodIntake = async (req, res, next) => {};
+const updateProductFoodIntake = async (req, res, next) => {
+  try {
+    const { id: foodIntakeId } = req.params;
+
+    const { productId, updatedFields } = req.body;
+    const { owner } = req.user;
+
+    const sectionToUpdate = req.params.section;
+
+    if (!['breakfast', 'lunch', 'dinner', 'snack'].includes(sectionToUpdate)) {
+      return res.status(400).json({ message: 'Invalid section provided' });
+    }
+
+    const filter = { _id: foodIntakeId, owner };
+    filter[`${sectionToUpdate}.products.productId`] = productId;
+
+    const update = { $set: {} };
+    update.$set[`${sectionToUpdate}.products.$`] = updatedFields;
+
+    const options = { new: true };
+
+    let updatedFoodIntake = await FoodIntake.findOneAndUpdate(
+      filter,
+      update,
+      options,
+    );
+
+    await updateIntakeTotals(updatedFoodIntake);
+
+    if (!updatedFoodIntake) {
+      console.log('Product not found or Food Intake not found');
+      return res
+        .status(404)
+        .json({ message: 'Food Intake not found or product not found' });
+    }
+
+    res
+      .status(200)
+      .json({ message: 'Product updated', data: updatedFoodIntake });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const deleteFoodIntake = async (req, res, next) => {
-  const { date, breakfast, lunch, dinner, snack } = req.body;
-  const { _id: owner } = req.user;
+  try {
+    const { date, breakfast, lunch, dinner, snack } = req.body;
+    const { _id: owner } = req.user;
 
-  const formattedDate = format(new Date(date), 'yyyy-MM-dd');
+    const formattedDate = format(new Date(date), 'yyyy-MM-dd');
 
-  let updatedIntake = null;
-  let section = null;
+    const sections = ['snack', 'dinner', 'lunch', 'breakfast'];
+    let updatedIntake = null;
+    let section = null;
 
-  if (snack && snack.products) {
-    updatedIntake = await FoodIntake.findOneAndUpdate(
-      { date: formattedDate, owner },
-      {
-        $pull: {
-          'snack.products': { productId: snack.products[0].productId },
-        },
-      },
-      { new: true },
-    );
-    section = 'snack';
-  } else if (dinner && dinner.products) {
-    updatedIntake = await FoodIntake.findOneAndUpdate(
-      { date: formattedDate, owner },
-      {
-        $pull: {
-          'dinner.products': { productId: dinner.products[0].productId },
-        },
-      },
-      { new: true },
-    );
-    section = 'dinner';
-  } else if (lunch && lunch.products) {
-    updatedIntake = await FoodIntake.findOneAndUpdate(
-      { date: formattedDate, owner },
-      {
-        $pull: {
-          'lunch.products': { productId: lunch.products[0].productId },
-        },
-      },
-      { new: true },
-    );
-    section = 'lunch';
-  } else if (breakfast && breakfast.products) {
-    updatedIntake = await FoodIntake.findOneAndUpdate(
-      { date: formattedDate, owner },
-      {
-        $pull: {
-          'breakfast.products': {
-            productId: breakfast.products[0].productId,
+    for (const sec of sections) {
+      const sectionData = req.body[sec];
+      if (sectionData && sectionData.products) {
+        const query = { date: formattedDate, owner };
+        query[`${sec}.products.productId`] = sectionData.products[0].productId;
+
+        updatedIntake = await FoodIntake.findOneAndUpdate(
+          query,
+          {
+            $pull: {
+              [`${sec}.products`]: {
+                productId: sectionData.products[0].productId,
+              },
+            },
           },
-        },
-      },
-      { new: true },
-    );
-    section = 'breakfast';
-  }
+          { new: true },
+        );
 
-  if (!updatedIntake) {
-    return res.status(404).json({
-      error: 'Food intake not found or product not in specified section',
+        if (updatedIntake) {
+          section = sec;
+          break;
+        }
+      }
+    }
+
+    if (!updatedIntake) {
+      return res.status(404).json({
+        error: 'Food intake not found or product not in specified section',
+      });
+    }
+
+    await updateIntakeTotals(updatedIntake);
+
+    return res.status(200).json({
+      message: `Product deleted from ${section}`,
+      data: updatedIntake,
     });
+  } catch (error) {
+    next(error);
   }
-
-  await updateIntakeTotals(updatedIntake);
-
-  return res.status(200).json({
-    message: `Product deleted from ${section}`,
-    data: updatedIntake,
-  });
 };
 
 export default {
   addFood: ctrlWrapper(addFoodIntake),
+  updateFood: ctrlWrapper(updateProductFoodIntake),
   deleteFood: ctrlWrapper(deleteFoodIntake),
 };
