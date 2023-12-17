@@ -9,7 +9,24 @@ const currentUser = async userId => {
 
   if (!userFind) throw HttpError(404, 'User not found');
 
-  return userFind;
+  const dailyGoalCalories = determinationDailyLevel(userFind);
+  const dailyGoalWater = dayNormaWater(userFind);
+  const { protein, fat, carbonohidrates } = calculateMacros(
+    userFind,
+    dailyGoalCalories,
+  );
+
+  const updatedUser = await User.findByIdAndUpdate(
+    { _id: userId },
+    {
+      dailyGoalCalories,
+      dailyGoalWater,
+      dailyGoalElements: { protein, fat, carbonohidrates },
+    },
+    { new: true },
+  );
+
+  return updatedUser;
 };
 
 const updateUser = async (userId, userData, pathAvatar) => {
@@ -21,15 +38,18 @@ const updateUser = async (userId, userData, pathAvatar) => {
     { new: true },
   );
 
-  const newDailyLevel = determinationDailyLevel(newUser);
-  const newNormaWater = dayNormaWater(newUser);
-  const { protein, fat, carbonohidrates } = calculateMacros(newUser);
+  const dailyGoalCalories = determinationDailyLevel(newUser);
+  const dailyGoalWater = dayNormaWater(newUser);
+  const { protein, fat, carbonohidrates } = calculateMacros(
+    newUser,
+    dailyGoalCalories,
+  );
 
   const updatedUser = await User.findByIdAndUpdate(
     { _id: userId },
     {
-      dailyGoalCalories: newDailyLevel,
-      dailtyGoalWater: newNormaWater,
+      dailyGoalCalories,
+      dailyGoalWater,
       dailyGoalElements: { protein, fat, carbonohidrates },
     },
     { new: true },
