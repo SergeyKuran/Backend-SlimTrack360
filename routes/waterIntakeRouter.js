@@ -8,6 +8,8 @@ const router = Router();
 
 router.use(authenticate);
 
+router.get('/water-intake', waterIntakeController.todayWater);
+
 router.post(
   '/water-intake',
   bodyValidator(AddWaterIntakeSchema),
