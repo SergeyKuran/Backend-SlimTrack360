@@ -5,6 +5,8 @@ import authRouter from './routes/authRouter.js';
 import userRouter from './routes/userRoutes.js';
 import recommendedFoodRouter from './routes/recommendedFood.js';
 import foodIntakeRouter from './routes/foodIntakeRouter.js';
+import waterIntakeRouter from './routes/waterIntakeRouter.js';
+
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -16,6 +18,7 @@ app.use(json());
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/user', foodIntakeRouter);
+app.use('/api/user', waterIntakeRouter);
 app.use('/api', recommendedFoodRouter);
 
 app.use((_, res) => {

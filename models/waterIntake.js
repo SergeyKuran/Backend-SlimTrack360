@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { handleMongooseError } from '../helpers/Error/handleMongooseError';
+import { handleMongooseError } from '../helpers/Error/handleMongooseError.js';
 
 const userWaterIntakeSchema = new Schema(
   {
@@ -8,7 +8,7 @@ const userWaterIntakeSchema = new Schema(
       default: '',
       require: true,
     },
-    water: {
+    value: {
       type: Number,
       default: 0,
     },

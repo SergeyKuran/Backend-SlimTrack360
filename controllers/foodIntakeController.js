@@ -2,7 +2,6 @@ import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { FoodIntake } from '../models/foodIntake.js';
 import { updateIntakeTotals } from '../helpers/foodIntake.js/updateTotals.js';
-import { ObjectId } from 'mongodb';
 
 const addFoodIntake = async (req, res, next) => {
   const { date, breakfast, lunch, dinner, snack } = req.body;
@@ -63,55 +62,51 @@ const addFoodIntake = async (req, res, next) => {
 };
 
 const updateProductFoodIntake = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const { breakfast, lunch, dinner, snack } = req.body;
+  const { id } = req.params;
+  const { breakfast, lunch, dinner, snack } = req.body;
 
-    let existingFoodIntake = await FoodIntake.findById(id);
+  let existingFoodIntake = await FoodIntake.findById(id);
 
-    if (!existingFoodIntake) {
-      console.log('Food Intake not found');
-      return res.status(404).json({ message: 'Food Intake not found' });
-    }
-
-    const updateProducts = (existingProducts, updatedProducts) => {
-      updatedProducts.forEach(updatedProduct => {
-        const existingProductIndex = existingProducts.findIndex(
-          product => product.productId === updatedProduct.productId,
-        );
-        if (existingProductIndex !== -1) {
-          existingProducts[existingProductIndex] = updatedProduct;
-        } else {
-          existingProducts.push(updatedProduct);
-        }
-      });
-    };
-
-    if (breakfast && breakfast.products && breakfast.products.length > 0) {
-      updateProducts(existingFoodIntake.breakfast.products, breakfast.products);
-    }
-
-    if (lunch && lunch.products && lunch.products.length > 0) {
-      updateProducts(existingFoodIntake.lunch.products, lunch.products);
-    }
-
-    if (dinner && dinner.products && dinner.products.length > 0) {
-      updateProducts(existingFoodIntake.dinner.products, dinner.products);
-    }
-
-    if (snack && snack.products && snack.products.length > 0) {
-      updateProducts(existingFoodIntake.snack.products, snack.products);
-    }
-
-    await updateIntakeTotals(existingFoodIntake);
-    existingFoodIntake = await existingFoodIntake.save();
-
-    res
-      .status(200)
-      .json({ message: 'Food Intake updated', data: existingFoodIntake });
-  } catch (error) {
-    next(error);
+  if (!existingFoodIntake) {
+    console.log('Food Intake not found');
+    return res.status(404).json({ message: 'Food Intake not found' });
   }
+
+  const updateProducts = (existingProducts, updatedProducts) => {
+    updatedProducts.forEach(updatedProduct => {
+      const existingProductIndex = existingProducts.findIndex(
+        product => product.productId === updatedProduct.productId,
+      );
+      if (existingProductIndex !== -1) {
+        existingProducts[existingProductIndex] = updatedProduct;
+      } else {
+        existingProducts.push(updatedProduct);
+      }
+    });
+  };
+
+  if (breakfast && breakfast.products && breakfast.products.length > 0) {
+    updateProducts(existingFoodIntake.breakfast.products, breakfast.products);
+  }
+
+  if (lunch && lunch.products && lunch.products.length > 0) {
+    updateProducts(existingFoodIntake.lunch.products, lunch.products);
+  }
+
+  if (dinner && dinner.products && dinner.products.length > 0) {
+    updateProducts(existingFoodIntake.dinner.products, dinner.products);
+  }
+
+  if (snack && snack.products && snack.products.length > 0) {
+    updateProducts(existingFoodIntake.snack.products, snack.products);
+  }
+
+  await updateIntakeTotals(existingFoodIntake);
+  existingFoodIntake = await existingFoodIntake.save();
+
+  res
+    .status(200)
+    .json({ message: 'Food Intake updated', data: existingFoodIntake });
 };
 
 const deleteFoodIntake = async (req, res, next) => {
