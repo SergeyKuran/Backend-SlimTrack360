@@ -1,5 +1,5 @@
-export const calculateMacros = user => {
-  const { goal, dailyGoalCalories } = user;
+export const calculateMacros = (user, dailyGoalCalories) => {
+  const { goal } = user;
   let proteinPercentage, fatPercentage, carbPercentage;
 
   switch (goal) {
