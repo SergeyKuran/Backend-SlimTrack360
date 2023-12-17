@@ -14,4 +14,6 @@ router.post(
   waterIntakeController.addWater,
 );
 
+router.delete('/water-intake', waterIntakeController.resetWater);
+
 export default router;
