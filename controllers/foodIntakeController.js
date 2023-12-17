@@ -15,7 +15,6 @@ const addFoodIntake = async (req, res, next) => {
   });
 
   if (existingIntake) {
-    // -------------- Update existing entry --------------- //
     if (!existingIntake.breakfast) {
       existingIntake.breakfast = { products: [] };
     }
@@ -43,7 +42,6 @@ const addFoodIntake = async (req, res, next) => {
       data: existingIntake,
     });
   } else {
-    // ------------ Create new entry --------------- //
     const newFoodIntake = new FoodIntake({
       date: formattedDate,
       breakfast: breakfast || { products: [] },
@@ -62,6 +60,8 @@ const addFoodIntake = async (req, res, next) => {
     res.status(201).json({ message: 'New entry created', data: createdIntake });
   }
 };
+
+const updateProductFoodIntake = async (req, res, next) => {};
 
 const deleteFoodIntake = async (req, res, next) => {
   const { date, breakfast, lunch, dinner, snack } = req.body;

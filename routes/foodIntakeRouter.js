@@ -14,6 +14,12 @@ router.post(
   foodIntakeController.addFood,
 );
 
+router.put(
+  '/food-intake/:id',
+  bodyValidator(FoodIntakeSchema.FoodIntakeSchema),
+  foodIntakeController.addFood,
+);
+
 router.delete(
   '/food-intake/',
   bodyValidator(FoodIntakeSchema.FoodIntakeSchema),
