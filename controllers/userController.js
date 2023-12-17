@@ -1,5 +1,4 @@
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
-import { HttpError } from '../helpers/Error/HttpError.js';
 import userServices from '../services/userServices.js';
 
 const current = async (req, res, next) => {
@@ -12,7 +11,7 @@ const current = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
   } = await userServices.currentUser(req.user._id);
 
@@ -25,7 +24,7 @@ const current = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
   });
 };
@@ -40,9 +39,13 @@ const update = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
-  } = await userServices.updateUser(req.user._id, req.body);
+  } = await userServices.updateUser(
+    req.user._id,
+    req.body,
+    req.file ? req.file.path : '',
+  );
 
   res.json({
     name,
@@ -53,7 +56,7 @@ const update = async (req, res, next) => {
     height,
     currentWeight,
     dailyGoalCalories,
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalElements,
   });
 };
@@ -63,6 +66,7 @@ const goal = async (req, res, next) => {
 
   res.json({
     goal,
+    message: 'Goal changed',
   });
 };
 
@@ -74,6 +78,7 @@ const weight = async (req, res, next) => {
 
   res.json({
     currentWeight,
+    message: 'Weight changed',
   });
 };
 

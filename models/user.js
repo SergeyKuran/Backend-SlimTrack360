@@ -12,7 +12,7 @@ export const userParamsSchema = new Schema(
     goal: {
       type: String,
       require: true,
-      enum: userParametrs.userSexusersGoal,
+      enum: userParametrs.usersGoal,
       default: 'Lose Fat',
     },
     sex: {
@@ -90,7 +90,7 @@ const userSchema = new Schema(
     },
     avatarUrl: {
       type: String,
-      default: null,
+      default: '',
     },
     verify: {
       type: Boolean,
@@ -100,14 +100,10 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    userParams: {
-      type: userParamsSchema,
-      require: true,
-    },
     goal: {
       type: String,
       require: true,
-      enum: userParametrs.userSexusersGoal,
+      enum: userParametrs.usersGoal,
       default: 'Lose Fat',
     },
     sex: {
@@ -132,24 +128,29 @@ const userSchema = new Schema(
     },
     dailyGoalCalories: {
       type: Number,
-      default: null,
+      default: 0,
+      min: 0,
     },
-    dailtyGoalWater: {
+    dailyGoalWater: {
       type: Number,
-      default: null,
+      default: 0,
+      min: 0,
     },
     dailyGoalElements: {
-      Carbonohidrates: {
+      carbonohidrates: {
         type: Number,
-        default: null,
+        default: 0,
+        min: 0,
       },
-      Protein: {
+      protein: {
         type: Number,
-        default: null,
+        default: 0,
+        min: 0,
       },
-      Fat: {
+      fat: {
         type: Number,
-        default: null,
+        default: 0,
+        min: 0,
       },
     },
   },

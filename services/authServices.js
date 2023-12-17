@@ -10,15 +10,15 @@ import { calculateMacros } from '../decorators/calculateMacroElem.js';
 const { SECRET_KEY } = process.env;
 
 const signUp = async body => {
-  const { email, password, levelActivity, currentWeight, goal } = body;
-
+  const { email, password } = body;
   const user = await User.findOne({ email });
+
   if (user) throw HttpError(409, `Email "${email}" in use`);
 
-  const dailtyGoalWater = dayNormaWater(levelActivity, currentWeight);
+  const dailyGoalWater = dayNormaWater(body);
   const dailyGoalCalories = determinationDailyLevel(body);
-  const { Protein, Fat, Carbonohidrates } = calculateMacros(
-    goal,
+  const { protein, fat, carbonohidrates } = calculateMacros(
+    body,
     dailyGoalCalories,
   );
 
@@ -31,9 +31,9 @@ const signUp = async body => {
     password: hashPassword,
     verificationToken,
     date: date.getDate(),
-    dailtyGoalWater,
+    dailyGoalWater,
     dailyGoalCalories,
-    dailyGoalElements: { Protein, Fat, Carbonohidrates },
+    dailyGoalElements: { protein, fat, carbonohidrates },
   });
 };
 
@@ -41,19 +41,35 @@ const signIn = async body => {
   const userFind = await User.findOne({ email: body.email });
 
   if (!userFind) throw HttpError(403, 'Email or password is wrong');
-  const comparePassword = bcryptjs.compare(body.password, userFind.password);
 
-  if (!comparePassword) {
-    throw HttpError(403, 'Email or password is wrong');
-  }
+  const comparePassword = await bcryptjs.compare(
+    body.password,
+    userFind.password,
+  );
+
+  if (!comparePassword) throw HttpError(403, 'Email or password is wrong');
 
   const payload = {
     id: userFind._id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
+  const token = await jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
 
-  return await User.findByIdAndUpdate(userFind._id, { token });
+  await User.findByIdAndUpdate({ _id: userFind._id }, { token });
+
+  return token;
+};
+
+const passwordReset = async (email, _id) => {
+  const userFind = await User.findOne({ email });
+  if (!userFind) throw HttpError(404, `User with ${email} is missing`);
+
+  const newPassword = nanoid();
+  const hashNewPassword = await bcryptjs.hash(newPassword, 8);
+
+  await User.findByIdAndUpdate({ _id }, { password: hashNewPassword });
+
+  return newPassword;
 };
 
 const logout = async userId => {
@@ -64,6 +80,7 @@ const logout = async userId => {
 const authServices = {
   signUp,
   signIn,
+  passwordReset,
   logout,
 };
 
