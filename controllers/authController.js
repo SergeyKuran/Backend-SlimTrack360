@@ -3,6 +3,8 @@ import { HttpError } from '../helpers/Error/HttpError.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
 import authServices from '../services/authServices.js';
 
+const { BASE_URL } = process.env;
+
 const signUp = async (req, res, next) => {
   const newUser = await authServices.signUp(req.body);
   res.json({ newUser, message: 'Created' });
@@ -40,9 +42,19 @@ const signout = async (req, res, next) => {
   res.json({ message: 'Logout successful' });
 };
 
+const verify = async (req, res, next) => {
+  const { verificationToken } = req.params;
+  const user = await authServices.verifyEmail(verificationToken);
+
+  if (!user) throw HttpError(404, 'User not found');
+
+  res.redirect(`${BASE_URL}api/auth/signin`);
+};
+
 export default {
   signup: ctrlWrapper(signUp),
   signin: ctrlWrapper(signIn),
   passwordForgot: ctrlWrapper(passwordForgot),
   signout: ctrlWrapper(signout),
+  verify: ctrlWrapper(verify),
 };
