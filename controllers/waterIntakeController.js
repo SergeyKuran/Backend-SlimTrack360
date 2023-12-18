@@ -18,14 +18,16 @@ const addWaterIntake = async (req, res) => {
   const { _id: owner } = req.user;
   const { date, value } = req.body;
 
+  const waterValue = value >= 0 ? value : 0;
+
   const existingIntake = await WaterIntake.findOne({ date, owner });
 
   if (existingIntake) {
-    existingIntake.value += value;
+    existingIntake.value += waterValue;
     await existingIntake.save();
     res.status(200).json(existingIntake);
   } else {
-    const newIntake = await WaterIntake.create({ date, value, owner });
+    const newIntake = await WaterIntake.create({ date, waterValue, owner });
     const responseData = { ...newIntake.toJSON() };
     delete responseData.owner;
 
