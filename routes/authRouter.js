@@ -21,6 +21,8 @@ router.post(
   authController.passwordForgot,
 );
 
+router.get('/verify/:verificationToken', authController.verify);
+
 router.post('/signout', authenticate, authController.signout);
 
 export default router;
