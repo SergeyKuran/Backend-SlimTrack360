@@ -44,11 +44,36 @@ const signout = async (req, res, next) => {
 
 const verify = async (req, res, next) => {
   const { verificationToken } = req.params;
-  const user = await authServices.verifyEmail(verificationToken);
 
-  if (!user) throw HttpError(404, 'User not found');
+  const {
+    name,
+    email,
+    avatarUrl,
+    sex,
+    age,
+    height,
+    verify,
+    token,
+    currentWeight,
+    dailyGoalCalories,
+    dailyGoalWater,
+    dailyGoalElements,
+  } = await authServices.verifyEmail(verificationToken);
 
-  res.redirect(`${BASE_URL}api/auth/signin`);
+  res.json({
+    name,
+    email,
+    avatarUrl,
+    sex,
+    age,
+    verify,
+    token,
+    height,
+    currentWeight,
+    dailyGoalCalories,
+    dailyGoalWater,
+    dailyGoalElements,
+  });
 };
 
 export default {
