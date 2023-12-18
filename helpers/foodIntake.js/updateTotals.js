@@ -1,6 +1,8 @@
 export const updateIntakeTotals = async intake => {
   const sections = ['breakfast', 'lunch', 'dinner', 'snack'];
 
+  let totalAllCalories = 0;
+
   for (const section of sections) {
     const products = intake[section].products;
 
@@ -24,7 +26,13 @@ export const updateIntakeTotals = async intake => {
     intake[section].totalFat = total.totalFat;
     intake[section].totalCarbonohidretes = total.totalCarbonohidretes;
     intake[section].totalProtein = total.totalProtein;
+
+    // Суммируем общее количество калорий из каждого раздела
+    totalAllCalories += total.totalCalories;
   }
+
+  // Записываем общее количество калорий в поле totalCalories главного объекта
+  intake.totalCalories = totalAllCalories;
 
   await intake.save();
 };

@@ -57,6 +57,10 @@ const userFoodIntakeSchema = new Schema(
       default: '',
       require: true,
     },
+    totalCalories: {
+      type: Number,
+      default: 0,
+    },
     breakfast: {
       type: oneInTakeSchema,
       default: null,

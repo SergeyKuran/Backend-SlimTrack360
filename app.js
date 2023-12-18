@@ -8,6 +8,7 @@ import foodIntakeRouter from './routes/foodIntakeRouter.js';
 import waterIntakeRouter from './routes/waterIntakeRouter.js';
 import errorNotFound from './helpers/Error/errorNotFound.js';
 import globalError from './helpers/Error/globalError.js';
+import userStatistics from './routes/userStatisticRouter.js';
 
 const app = express();
 
@@ -17,11 +18,12 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(json());
 
+app.use('/api', recommendedFoodRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/user', foodIntakeRouter);
 app.use('/api/user', waterIntakeRouter);
-app.use('/api', recommendedFoodRouter);
+app.use('/api/user', userStatistics);
 
 app.use(errorNotFound);
 
