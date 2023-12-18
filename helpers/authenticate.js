@@ -1,6 +1,7 @@
-// import { HttpError } from './Error/HttpError.js';
-// import jwt from 'jsonwebtoken';
-// import { User } from '../models/user.js';
+import { HttpError } from './Error/HttpError.js';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/user.js';
+import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 
 // const { SECRET_KEY } = process.env;
 
@@ -28,11 +29,6 @@
 // };
 
 // export default authenticate;
-
-import jwt from 'jsonwebtoken';
-import { HttpError } from '../helpers/HttpError.js';
-import { User } from '../models/user.js';
-import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 
 const { SECRET_KEY } = process.env;
 
