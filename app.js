@@ -6,6 +6,7 @@ import userRouter from './routes/userRoutes.js';
 import recommendedFoodRouter from './routes/recommendedFood.js';
 import foodIntakeRouter from './routes/foodIntakeRouter.js';
 import waterIntakeRouter from './routes/waterIntakeRouter.js';
+import userStatistics from './routes/userStatisticRouter.js';
 
 const app = express();
 
@@ -15,11 +16,12 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(json());
 
+app.use('/api', recommendedFoodRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/user', foodIntakeRouter);
 app.use('/api/user', waterIntakeRouter);
-app.use('/api', recommendedFoodRouter);
+app.use('/api/user', userStatistics);
 
 app.use((_, res) => {
   res.status(404).json({ message: 'Not found!' });
