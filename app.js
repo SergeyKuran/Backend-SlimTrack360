@@ -6,6 +6,8 @@ import userRouter from './routes/userRoutes.js';
 import recommendedFoodRouter from './routes/recommendedFood.js';
 import foodIntakeRouter from './routes/foodIntakeRouter.js';
 import waterIntakeRouter from './routes/waterIntakeRouter.js';
+import errorNotFound from './helpers/Error/errorNotFound.js';
+import globalError from './helpers/Error/globalError.js';
 
 const app = express();
 
@@ -21,14 +23,8 @@ app.use('/api/user', foodIntakeRouter);
 app.use('/api/user', waterIntakeRouter);
 app.use('/api', recommendedFoodRouter);
 
-app.use((_, res) => {
-  res.status(404).json({ message: 'Not found!' });
-});
+app.use(errorNotFound);
 
-app.use((err, _, res, __) => {
-  const { status = 500, message = 'Internal Server Error' } = err;
-
-  res.status(status).json({ message });
-});
+app.use(globalError);
 
 export default app;
