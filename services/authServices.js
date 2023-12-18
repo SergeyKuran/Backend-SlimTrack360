@@ -6,8 +6,10 @@ import { nanoid } from 'nanoid';
 import { User } from '../models/user.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
 import { calculateMacros } from '../decorators/calculateMacroElem.js';
+import { sendEmail } from '../helpers/sendFromPost.js';
+import { generateVerificationEmailHTML } from '../helpers/generateVerificationEmailHTML.js';
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, BASE_URL } = process.env;
 
 const signUp = async body => {
   const { email, password } = body;
@@ -23,8 +25,18 @@ const signUp = async body => {
   );
 
   const hashPassword = await bcryptjs.hash(password, 10);
-  const verificationToken = nanoid();
   const date = new Date();
+  const verificationToken = nanoid();
+
+  const document = generateVerificationEmailHTML(verificationToken, BASE_URL);
+
+  const verifyEmail = {
+    to: `${email}`,
+    subject: 'Verify email!',
+    html: `${document}`,
+  };
+
+  await sendEmail(verifyEmail);
 
   return await User.create({
     ...body,
@@ -72,6 +84,20 @@ const passwordReset = async (email, _id) => {
   return newPassword;
 };
 
+const verifyEmail = async verificationToken => {
+  const user = await User.findOne({ verificationToken });
+
+  if (!user) throw HttpError(404, 'User not found');
+
+  await User.findByIdAndUpdate(
+    { _id: user._id },
+    { verify: true, verificationToken: null },
+    { new: true },
+  );
+
+  return user;
+};
+
 const logout = async userId => {
   const user = await User.findByIdAndUpdate({ _id: userId }, { token: '' });
   if (!user) throw HttpError(404, 'User not found');
@@ -82,6 +108,7 @@ const authServices = {
   signIn,
   passwordReset,
   logout,
+  verifyEmail,
 };
 
 export default authServices;
