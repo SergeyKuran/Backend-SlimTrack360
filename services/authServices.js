@@ -54,6 +54,9 @@ const signIn = async body => {
 
   if (!userFind) throw HttpError(403, 'Email or password is wrong');
 
+  if (!userFind.verify)
+    throw HttpError(403, 'Access is forbidden. Please verify your account.');
+
   const comparePassword = await bcryptjs.compare(
     body.password,
     userFind.password,
