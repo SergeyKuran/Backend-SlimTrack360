@@ -61,6 +61,18 @@ const userFoodIntakeSchema = new Schema(
       type: Number,
       default: 0,
     },
+    totalFat: {
+      type: Number,
+      default: 0,
+    },
+    totalCarbonohidretes: {
+      type: Number,
+      default: 0,
+    },
+    totalProtein: {
+      type: Number,
+      default: 0,
+    },
     breakfast: {
       type: oneInTakeSchema,
       default: null,

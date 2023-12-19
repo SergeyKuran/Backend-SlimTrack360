@@ -3,7 +3,6 @@ import { getMonthName } from '../helpers/getMonthName.js';
 import { WaterIntake } from '../models/waterIntake.js';
 import { FoodIntake } from '../models/foodIntake.js';
 import { UserWeight } from '../models/userWeight.js';
-import { ObjectId } from 'mongodb';
 
 const getUserStatistic = async (req, res, next) => {
   const { month } = req.body;
