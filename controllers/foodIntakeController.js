@@ -109,59 +109,6 @@ const updateProductFoodIntake = async (req, res, next) => {
     .json({ message: 'Food Intake updated', data: existingFoodIntake });
 };
 
-// const deleteFoodIntake = async (req, res, next) => {
-//   try {
-//     const { date, breakfast, lunch, dinner, snack } = req.body;
-//     const { _id: owner } = req.user;
-
-//     const formattedDate = format(new Date(date), 'yyyy-MM-dd');
-
-//     const sections = ['snack', 'dinner', 'lunch', 'breakfast'];
-//     let updatedIntake = null;
-//     let section = null;
-
-//     for (const sec of sections) {
-//       const sectionData = req.body[sec];
-//       if (sectionData && sectionData.products) {
-//         const query = { date: formattedDate, owner };
-//         query[`${sec}.products.productId`] = sectionData.products[0].productId;
-
-//         updatedIntake = await FoodIntake.findOneAndUpdate(
-//           query,
-//           {
-//             $pull: {
-//               [`${sec}.products`]: {
-//                 productId: sectionData.products[0].productId,
-//               },
-//             },
-//           },
-//           { new: true },
-//         );
-
-//         if (updatedIntake) {
-//           section = sec;
-//           break;
-//         }
-//       }
-//     }
-
-//     if (!updatedIntake) {
-//       return res.status(404).json({
-//         error: 'Food intake not found or product not in specified section',
-//       });
-//     }
-
-//     await updateIntakeTotals(updatedIntake);
-
-//     return res.status(200).json({
-//       message: `Product deleted from ${section}`,
-//       data: updatedIntake,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 const deleteFoodIntake = async (req, res, next) => {
   try {
     const { date, breakfast, lunch, dinner, snack } = req.body;
@@ -190,7 +137,7 @@ const deleteFoodIntake = async (req, res, next) => {
       });
     }
 
-    const productId = targetProducts[0].productId; // Получаем только productId
+    const productId = targetProducts[0].productId;
 
     const query = { date: formattedDate, owner };
 
