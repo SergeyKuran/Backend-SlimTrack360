@@ -1,37 +1,27 @@
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { WaterIntake } from '../models/waterIntake.js';
 
-const getCurrentWaterIntake = async (req, res) => {
-  const { date } = req.body;
-  const { _id: owner } = req.user;
-
-  const waterIntake = await WaterIntake.findOne({ date, owner });
-
-  if (!waterIntake) {
-    return res.status(404).json({ message: 'Water intake not found' });
-  }
-
-  res.status(200).json(waterIntake);
-};
-
 const addWaterIntake = async (req, res) => {
   const { _id: owner } = req.user;
   const { date, value } = req.body;
 
-  const waterValue = value >= 0 ? value : 0;
+  const waterValue = parseFloat(value || 0);
 
-  const existingIntake = await WaterIntake.findOne({ date, owner });
+  let existingIntake = await WaterIntake.findOne({ date, owner });
 
   if (existingIntake) {
     existingIntake.value += waterValue;
     await existingIntake.save();
-    res.status(200).json(existingIntake);
+    return res.status(200).json(existingIntake);
   } else {
-    const newIntake = await WaterIntake.create({ date, waterValue, owner });
+    const newIntake = await WaterIntake.create({
+      date,
+      owner,
+      value: waterValue,
+    });
     const responseData = { ...newIntake.toJSON() };
     delete responseData.owner;
-
-    res.status(201).json(responseData);
+    return res.status(201).json(responseData);
   }
 };
 
@@ -54,7 +44,6 @@ const deleteWaterIntake = async (req, res, next) => {
 };
 
 export default {
-  todayWater: ctrlWrapper(getCurrentWaterIntake),
   addWater: ctrlWrapper(addWaterIntake),
   resetWater: ctrlWrapper(deleteWaterIntake),
 };

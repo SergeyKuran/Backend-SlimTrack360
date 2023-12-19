@@ -3,7 +3,7 @@ import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { FoodIntake } from '../models/foodIntake.js';
 import { updateIntakeTotals } from '../helpers/foodIntake.js/updateTotals.js';
 
-const addFoodIntake = async (req, res, next) => {
+const addFoodIntake = async (req, res) => {
   const { date, breakfast, lunch, dinner, snack } = req.body;
   const { _id: owner } = req.user;
 

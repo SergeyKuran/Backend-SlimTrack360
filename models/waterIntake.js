@@ -5,12 +5,10 @@ const userWaterIntakeSchema = new Schema(
   {
     date: {
       type: String,
-      default: '',
       require: true,
     },
     value: {
       type: Number,
-      default: 0,
     },
     owner: {
       type: Schema.Types.ObjectId,
