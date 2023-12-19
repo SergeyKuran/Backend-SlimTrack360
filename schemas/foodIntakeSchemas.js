@@ -52,6 +52,38 @@ const FoodIntakeSchema = Joi.object({
   }).optional(),
 });
 
+const DeleteFoodIntakeSchema = Joi.object({
+  date: Joi.date().max('now').required(),
+  breakfast: Joi.object({
+    products: Joi.array().items(
+      Joi.object({
+        productId: Joi.string().required(),
+      }),
+    ),
+  }).optional(),
+  lunch: Joi.object({
+    products: Joi.array().items(
+      Joi.object({
+        productId: Joi.string().required(),
+      }),
+    ),
+  }).optional(),
+  dinner: Joi.object({
+    products: Joi.array().items(
+      Joi.object({
+        productId: Joi.string().required(),
+      }),
+    ),
+  }).optional(),
+  snack: Joi.object({
+    products: Joi.array().items(
+      Joi.object({
+        productId: Joi.string().required(),
+      }),
+    ),
+  }).optional(),
+});
+
 const UpdateFoodIntakeSchema = Joi.object({
   breakfast: Joi.object({
     products: Joi.array().items(
@@ -103,4 +135,8 @@ const UpdateFoodIntakeSchema = Joi.object({
   }).optional(),
 });
 
-export default { FoodIntakeSchema, UpdateFoodIntakeSchema };
+export default {
+  FoodIntakeSchema,
+  UpdateFoodIntakeSchema,
+  DeleteFoodIntakeSchema,
+};
