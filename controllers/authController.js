@@ -34,10 +34,11 @@ const signUp = async (req, res) => {
   res.json({ newUser, message: 'Created' });
 };
 
+// ---------------  Log in ------------------- //
 const signIn = async (req, res) => {
-  const token = await authServices.signIn(req.body);
+  const user = await authServices.signIn(req.body);
 
-  res.json({ token, message: 'Login successful' });
+  res.json({ user, message: 'Login successful' });
 };
 
 const passwordForgot = async (req, res) => {

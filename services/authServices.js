@@ -49,6 +49,7 @@ const signUp = async body => {
   });
 };
 
+// -------------- Log In -------------- //
 const signIn = async body => {
   const userFind = await User.findOne({ email: body.email });
 
@@ -72,7 +73,38 @@ const signIn = async body => {
 
   await User.findByIdAndUpdate({ _id: userFind._id }, { token });
 
-  return token;
+  const {
+    name,
+    email,
+    avatarUrl,
+    goal,
+    sex,
+    age,
+    height,
+    currentWeight,
+    levelActivity,
+    dailyGoalCalories,
+    dailyGoalWater,
+    dailyGoalElements,
+  } = userFind;
+
+  const user = {
+    name,
+    email,
+    avatarUrl,
+    goal,
+    sex,
+    age,
+    height,
+    currentWeight,
+    levelActivity,
+    dailyGoalCalories,
+    dailyGoalWater,
+    dailyGoalElements,
+    token,
+  };
+
+  return user;
 };
 
 const passwordReset = async (email, _id) => {
