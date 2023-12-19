@@ -6,6 +6,6 @@ const router = Router();
 
 router.use(authenticate);
 
-router.get('/statistics', userStatistics.statistic);
+router.post('/statistics', userStatistics.statistic);
 
 export default router;
