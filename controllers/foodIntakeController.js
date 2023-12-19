@@ -169,64 +169,42 @@ const deleteFoodIntake = async (req, res, next) => {
 
     const formattedDate = format(new Date(date), 'yyyy-MM-dd');
 
-    const sections = ['snack', 'dinner', 'lunch', 'breakfast'];
-    let updatedIntake = null;
-    let section = null;
+    let targetSection = null;
+    let targetProducts = null;
 
-    for (const sec of sections) {
-      const sectionData = req.body[sec];
-
-      // Проверяем, если раздел пустой в запросе, и он не breakfast, то очищаем его в базе
-      if (
-        sec !== 'breakfast' &&
-        (!sectionData ||
-          !sectionData.products ||
-          sectionData.products.length === 0)
-      ) {
-        updatedIntake = await FoodIntake.findOneAndUpdate(
-          { date: formattedDate, owner },
-          { $set: { [sec]: { products: [] } } },
-          { new: true },
-        );
-
-        if (updatedIntake) {
-          section = sec;
-          break;
-        }
-      } else if (sec === 'breakfast' && Object.keys(breakfast).length === 0) {
-        // Если breakfast пустой в запросе, то очищаем его в базе
-        updatedIntake = await FoodIntake.findOneAndUpdate(
-          { date: formattedDate, owner },
-          { $set: { [sec]: { products: [] } } },
-          { new: true },
-        );
-
-        if (updatedIntake) {
-          section = sec;
-          break;
-        }
-      } else if (sectionData.products) {
-        const query = { date: formattedDate, owner };
-        query[`${sec}.products.productId`] = sectionData.products[0].productId;
-
-        updatedIntake = await FoodIntake.findOneAndUpdate(
-          query,
-          {
-            $pull: {
-              [`${sec}.products`]: {
-                productId: sectionData.products[0].productId,
-              },
-            },
-          },
-          { new: true },
-        );
-
-        if (updatedIntake) {
-          section = sec;
-          break;
-        }
-      }
+    if (breakfast && breakfast.products && breakfast.products.length > 0) {
+      targetSection = 'breakfast';
+      targetProducts = breakfast.products;
+    } else if (lunch && lunch.products && lunch.products.length > 0) {
+      targetSection = 'lunch';
+      targetProducts = lunch.products;
+    } else if (dinner && dinner.products && dinner.products.length > 0) {
+      targetSection = 'dinner';
+      targetProducts = dinner.products;
+    } else if (snack && snack.products && snack.products.length > 0) {
+      targetSection = 'snack';
+      targetProducts = snack.products;
+    } else {
+      return res.status(400).json({
+        error: 'No valid section or products specified for deletion',
+      });
     }
+
+    const productId = targetProducts[0].productId; // Получаем только productId
+
+    const query = { date: formattedDate, owner };
+
+    const updateOperation = {
+      $pull: {
+        [`${targetSection}.products`]: { productId },
+      },
+    };
+
+    const updatedIntake = await FoodIntake.findOneAndUpdate(
+      query,
+      updateOperation,
+      { new: true },
+    );
 
     if (!updatedIntake) {
       return res.status(404).json({
@@ -237,7 +215,7 @@ const deleteFoodIntake = async (req, res, next) => {
     await updateIntakeTotals(updatedIntake);
 
     return res.status(200).json({
-      message: `Product deleted from ${section}`,
+      message: `Product deleted from ${targetSection}`,
       data: updatedIntake,
     });
   } catch (error) {
