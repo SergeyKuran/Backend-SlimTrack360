@@ -31,7 +31,14 @@ const currentUser = async userId => {
   return updatedUser;
 };
 
-const updateUser = async (userId, userData, pathAvatar) => {
+const updateUser = async (
+  userId,
+  userData,
+  pathAvatar,
+  date,
+  owner,
+  currentWeight,
+) => {
   const user = { ...userData };
 
   const newUser = await User.findByIdAndUpdate(
@@ -56,6 +63,24 @@ const updateUser = async (userId, userData, pathAvatar) => {
     },
     { new: true },
   );
+
+  // Update Weight
+  // Add obj with weight
+  const formattedDate = format(new Date(date), 'yyyy-MM-dd');
+  const currentMonth = format(new Date(date), 'MMMM');
+
+  let userWeight = await UserWeight.findOne({ owner });
+
+  if (!userWeight[currentMonth]) {
+    userWeight[currentMonth] = [];
+  }
+
+  userWeight[currentMonth].push({
+    date: formattedDate,
+    weight: currentWeight,
+  });
+
+  await userWeight.save();
 
   return updatedUser;
 };

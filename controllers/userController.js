@@ -45,6 +45,9 @@ const update = async (req, res) => {
     req.user._id,
     req.body,
     req.file ? req.file.path : '',
+    req.body.date,
+    req.user._id,
+    req.body.currentWeight,
   );
 
   res.json({
