@@ -109,6 +109,59 @@ const updateProductFoodIntake = async (req, res, next) => {
     .json({ message: 'Food Intake updated', data: existingFoodIntake });
 };
 
+// const deleteFoodIntake = async (req, res, next) => {
+//   try {
+//     const { date, breakfast, lunch, dinner, snack } = req.body;
+//     const { _id: owner } = req.user;
+
+//     const formattedDate = format(new Date(date), 'yyyy-MM-dd');
+
+//     const sections = ['snack', 'dinner', 'lunch', 'breakfast'];
+//     let updatedIntake = null;
+//     let section = null;
+
+//     for (const sec of sections) {
+//       const sectionData = req.body[sec];
+//       if (sectionData && sectionData.products) {
+//         const query = { date: formattedDate, owner };
+//         query[`${sec}.products.productId`] = sectionData.products[0].productId;
+
+//         updatedIntake = await FoodIntake.findOneAndUpdate(
+//           query,
+//           {
+//             $pull: {
+//               [`${sec}.products`]: {
+//                 productId: sectionData.products[0].productId,
+//               },
+//             },
+//           },
+//           { new: true },
+//         );
+
+//         if (updatedIntake) {
+//           section = sec;
+//           break;
+//         }
+//       }
+//     }
+
+//     if (!updatedIntake) {
+//       return res.status(404).json({
+//         error: 'Food intake not found or product not in specified section',
+//       });
+//     }
+
+//     await updateIntakeTotals(updatedIntake);
+
+//     return res.status(200).json({
+//       message: `Product deleted from ${section}`,
+//       data: updatedIntake,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 const deleteFoodIntake = async (req, res, next) => {
   try {
     const { date, breakfast, lunch, dinner, snack } = req.body;
@@ -122,7 +175,37 @@ const deleteFoodIntake = async (req, res, next) => {
 
     for (const sec of sections) {
       const sectionData = req.body[sec];
-      if (sectionData && sectionData.products) {
+
+      // Проверяем, если раздел пустой в запросе, и он не breakfast, то очищаем его в базе
+      if (
+        sec !== 'breakfast' &&
+        (!sectionData ||
+          !sectionData.products ||
+          sectionData.products.length === 0)
+      ) {
+        updatedIntake = await FoodIntake.findOneAndUpdate(
+          { date: formattedDate, owner },
+          { $set: { [sec]: { products: [] } } },
+          { new: true },
+        );
+
+        if (updatedIntake) {
+          section = sec;
+          break;
+        }
+      } else if (sec === 'breakfast' && Object.keys(breakfast).length === 0) {
+        // Если breakfast пустой в запросе, то очищаем его в базе
+        updatedIntake = await FoodIntake.findOneAndUpdate(
+          { date: formattedDate, owner },
+          { $set: { [sec]: { products: [] } } },
+          { new: true },
+        );
+
+        if (updatedIntake) {
+          section = sec;
+          break;
+        }
+      } else if (sectionData.products) {
         const query = { date: formattedDate, owner };
         query[`${sec}.products.productId`] = sectionData.products[0].productId;
 
