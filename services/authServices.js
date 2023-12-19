@@ -28,15 +28,15 @@ const signUp = async body => {
   const date = new Date();
   const verificationToken = nanoid();
 
-  const document = generateVerificationEmailHTML(verificationToken, BASE_URL);
+  // const document = generateVerificationEmailHTML(verificationToken, BASE_URL);
 
-  const verifyEmail = {
-    to: `${email}`,
-    subject: 'Verify email!',
-    html: `${document}`,
-  };
+  // const verifyEmail = {
+  //   to: `${email}`,
+  //   subject: 'Verify email!',
+  //   html: `${document}`,
+  // };
 
-  await sendEmail(verifyEmail);
+  // await sendEmail(verifyEmail);
 
   return await User.create({
     ...body,

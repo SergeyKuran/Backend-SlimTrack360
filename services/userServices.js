@@ -3,6 +3,7 @@ import { User } from '../models/user.js';
 import { determinationDailyLevel } from '../decorators/determinationDailyLevel.js';
 import { dayNormaWater } from '../decorators/dayNormaWater.js';
 import { calculateMacros } from '../decorators/calculateMacroElem.js';
+import { userWeight } from '../models/userWeight.js';
 
 const currentUser = async userId => {
   const userFind = await User.findOne({ _id: userId });
@@ -78,7 +79,7 @@ const goalUser = async (userId, goal) => {
   return updatedUser;
 };
 
-const weightUser = async (userId, currentWeight) => {
+const weightUser = async (userId, currentWeight, date, owner) => {
   const newUser = await User.findByIdAndUpdate(
     { _id: userId },
     { currentWeight },
@@ -96,6 +97,10 @@ const weightUser = async (userId, currentWeight) => {
     },
     { new: true },
   );
+
+  const userWeightObj = await userWeight.findOne({ date, owner });
+
+  await userWeightObj.updateOne({ weight: currentWeight }, { new: true });
 
   return updatedUser;
 };

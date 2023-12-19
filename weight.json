@@ -1,0 +1,212 @@
+[
+  {
+    "date": "2023-11-01",
+    "weight": 85,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-02",
+    "weight": 103,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-03",
+    "weight": 72,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-04",
+    "weight": 91,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-05",
+    "weight": 117,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-06",
+    "weight": 76,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-07",
+    "weight": 98,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-08",
+    "weight": 104,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-09",
+    "weight": 84,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-10",
+    "weight": 112,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-11",
+    "weight": 77,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-12",
+    "weight": 94,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-13",
+    "weight": 71,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-14",
+    "weight": 88,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-15",
+    "weight": 120,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-16",
+    "weight": 80,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-17",
+    "weight": 105,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-18",
+    "weight": 73,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-19",
+    "weight": 95,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-20",
+    "weight": 110,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-21",
+    "weight": 79,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-22",
+    "weight": 100,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-23",
+    "weight": 75,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-24",
+    "weight": 115,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-25",
+    "weight": 82,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-26",
+    "weight": 96,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-27",
+    "weight": 71,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-28",
+    "weight": 113,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-29",
+    "weight": 90,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  },
+  {
+    "date": "2023-11-30",
+    "weight": 78,
+    "owner": {
+      "$oid": "6580e36b2e9c9a23a28c844f"
+    }
+  }
+]

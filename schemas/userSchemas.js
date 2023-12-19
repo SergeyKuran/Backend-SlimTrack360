@@ -58,6 +58,7 @@ const goal = Joi.object({
 
 const weight = Joi.object({
   currentWeight: Joi.number().required(),
+  date: Joi.date().max('now').optional(),
 });
 
 const schema = {

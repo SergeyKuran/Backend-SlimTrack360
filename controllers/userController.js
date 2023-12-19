@@ -1,7 +1,7 @@
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import userServices from '../services/userServices.js';
 
-const current = async (req, res, next) => {
+const current = async (req, res) => {
   const {
     name,
     email,
@@ -29,7 +29,7 @@ const current = async (req, res, next) => {
   });
 };
 
-const update = async (req, res, next) => {
+const update = async (req, res) => {
   const {
     name,
     email,
@@ -61,7 +61,7 @@ const update = async (req, res, next) => {
   });
 };
 
-const goal = async (req, res, next) => {
+const goal = async (req, res) => {
   const { goal } = await userServices.goalUser(req.user._id, req.body.goal);
 
   res.json({
@@ -70,10 +70,12 @@ const goal = async (req, res, next) => {
   });
 };
 
-const weight = async (req, res, next) => {
+const weight = async (req, res) => {
   const { currentWeight } = await userServices.weightUser(
     req.user._id,
     req.body.currentWeight,
+    req.body.date,
+    req.user._id,
   );
 
   res.json({

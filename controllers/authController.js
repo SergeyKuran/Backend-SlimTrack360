@@ -1,22 +1,33 @@
+import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
+import { userWeight } from '../models/userWeight.js';
 import authServices from '../services/authServices.js';
 
-const { BASE_URL } = process.env;
-
-const signUp = async (req, res, next) => {
+const signUp = async (req, res) => {
   const newUser = await authServices.signUp(req.body);
+
+  // ------ Add weight in userWeight Model ----- //
+  const { _id: owner } = newUser;
+  const formattedDate = format(new Date(), 'yyyy-MM-dd');
+
+  await userWeight.create({
+    weight: newUser.currentWeight,
+    date: formattedDate,
+    owner,
+  });
+
   res.json({ newUser, message: 'Created' });
 };
 
-const signIn = async (req, res, next) => {
+const signIn = async (req, res) => {
   const token = await authServices.signIn(req.body);
 
   res.json({ token, message: 'Login successful' });
 };
 
-const passwordForgot = async (req, res, next) => {
+const passwordForgot = async (req, res) => {
   const password = await authServices.passwordReset(
     req.body.email,
     req.user._id,
@@ -36,13 +47,13 @@ const passwordForgot = async (req, res, next) => {
   res.json({ message: 'New password send on your email' });
 };
 
-const signout = async (req, res, next) => {
+const signout = async (req, res) => {
   authServices.logout(req.user._id);
 
   res.json({ message: 'Logout successful' });
 };
 
-const verify = async (req, res, next) => {
+const verify = async (req, res) => {
   const { verificationToken } = req.params;
 
   const {
