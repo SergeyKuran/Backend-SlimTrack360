@@ -2,21 +2,34 @@ import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
-import { userWeight } from '../models/userWeight.js';
+import { UserWeight } from '../models/userWeight.js';
 import authServices from '../services/authServices.js';
 
 const signUp = async (req, res) => {
   const newUser = await authServices.signUp(req.body);
 
   // ------ Add weight in userWeight Model ----- //
-  const { _id: owner } = newUser;
+  const { _id: owner, currentWeight } = newUser;
   const formattedDate = format(new Date(), 'yyyy-MM-dd');
 
-  await userWeight.create({
-    weight: newUser.currentWeight,
-    date: formattedDate,
-    owner,
-  });
+  const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+
+  const userWeight = await UserWeight.findOne({ owner });
+
+  if (!userWeight) {
+    const newUserWeight = new UserWeight({
+      owner,
+      [currentMonth]: [{ date: formattedDate, weight: currentWeight }],
+    });
+
+    await newUserWeight.save();
+  } else {
+    userWeight[currentMonth].push({
+      date: formattedDate,
+      weight: currentWeight,
+    });
+    await userWeight.save();
+  }
 
   res.json({ newUser, message: 'Created' });
 };

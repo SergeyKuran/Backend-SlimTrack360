@@ -1,9 +1,10 @@
+import { format } from 'date-fns';
 import { HttpError } from '../helpers/Error/HttpError.js';
 import { User } from '../models/user.js';
 import { determinationDailyLevel } from '../decorators/determinationDailyLevel.js';
 import { dayNormaWater } from '../decorators/dayNormaWater.js';
 import { calculateMacros } from '../decorators/calculateMacroElem.js';
-import { userWeight } from '../models/userWeight.js';
+import { UserWeight } from '../models/userWeight.js';
 
 const currentUser = async userId => {
   const userFind = await User.findOne({ _id: userId });
@@ -98,9 +99,22 @@ const weightUser = async (userId, currentWeight, date, owner) => {
     { new: true },
   );
 
-  const userWeightObj = await userWeight.findOne({ date, owner });
+  // Add obj with weight
+  const formattedDate = format(new Date(date), 'yyyy-MM-dd');
+  const currentMonth = format(new Date(date), 'MMMM');
 
-  await userWeightObj.updateOne({ weight: currentWeight }, { new: true });
+  let userWeight = await UserWeight.findOne({ owner });
+
+  if (!userWeight[currentMonth]) {
+    userWeight[currentMonth] = [];
+  }
+
+  userWeight[currentMonth].push({
+    date: formattedDate,
+    weight: currentWeight,
+  });
+
+  await userWeight.save();
 
   return updatedUser;
 };
