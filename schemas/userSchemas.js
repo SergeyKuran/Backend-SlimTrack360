@@ -45,11 +45,12 @@ const current = Joi.object({
 
 const update = Joi.object({
   name: Joi.string(),
-  email: Joi.string(),
   avatarUrl: Joi.string(),
+  sex: Joi.string(),
   age: Joi.number(),
   height: Joi.number(),
   currentWeight: Joi.number(),
+  levelActivity: Joi.number(),
   date: Joi.date().max('now').optional(),
 });
 

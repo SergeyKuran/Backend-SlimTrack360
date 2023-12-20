@@ -30,37 +30,24 @@ const current = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const {
-    name,
-    email,
-    avatarUrl,
-    sex,
-    age,
-    height,
-    currentWeight,
-    dailyGoalCalories,
-    dailyGoalWater,
-    dailyGoalElements,
-  } = await userServices.updateUser(
-    req.user._id,
-    req.body,
-    req.file ? req.file.path : '',
-    req.body.date,
-    req.user._id,
-    req.body.currentWeight,
-  );
+  const { name, avatarUrl, sex, age, height, currentWeight, levelActivity } =
+    await userServices.updateUser(
+      req.user._id,
+      req.body,
+      req.file ? req.file.path : '',
+      req.body.date,
+      req.user._id,
+      req.body.currentWeight,
+    );
 
   res.json({
     name,
-    email,
     avatarUrl,
     sex,
     age,
     height,
     currentWeight,
-    dailyGoalCalories,
-    dailyGoalWater,
-    dailyGoalElements,
+    levelActivity,
   });
 };
 
