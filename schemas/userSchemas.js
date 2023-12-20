@@ -52,6 +52,7 @@ const update = Joi.object({
   age: Joi.number(),
   height: Joi.number(),
   currentWeight: Joi.number(),
+  levelActivity: Joi.number(),
   date: Joi.date().max('now').optional(),
 });
 
