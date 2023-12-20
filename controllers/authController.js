@@ -31,7 +31,7 @@ const signUp = async (req, res) => {
     await userWeight.save();
   }
 
-  res.json({ newUser, message: 'Created' });
+  res.json({ message: 'Created' });
 };
 
 // ---------------  Log in ------------------- //
