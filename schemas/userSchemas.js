@@ -47,6 +47,8 @@ const update = Joi.object({
   name: Joi.string(),
   email: Joi.string(),
   avatarUrl: Joi.string(),
+  sex: Joi.string(),
+  goal: Joi.string(),
   age: Joi.number(),
   height: Joi.number(),
   currentWeight: Joi.number(),
