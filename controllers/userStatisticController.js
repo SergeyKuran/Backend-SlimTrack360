@@ -8,7 +8,7 @@ const getUserStatistic = async (req, res, next) => {
   const { month } = req.body;
   const { _id: owner } = req.user;
 
-  const monthStr = month ? month.padStart(2, '0') : '';
+  const monthStr = month ? String(month).padStart(2, '0') : '';
 
   // ------------ Total Water -------------- //
   const userWaterIntakes = await WaterIntake.aggregate([
@@ -85,26 +85,26 @@ const getUserStatistic = async (req, res, next) => {
     userWeightIntakes.length > 0 ? userWeightIntakes[0].currentWeight : 0;
   // ------------------ Monthly Arr Weight -------------- //
 
-  const monthMap = {
-    '01': 'January',
-    '02': 'February',
-    '03': 'March',
-    '04': 'April',
-    '05': 'May',
-    '06': 'June',
-    '07': 'July',
-    '08': 'August',
-    '09': 'September',
-    10: 'October',
-    11: 'November',
-    12: 'December',
-  };
+  // const monthMap = {
+  //   1: 'January',
+  //   2: 'February',
+  //   3: 'March',
+  //   4: 'April',
+  //   5: 'May',
+  //   6: 'June',
+  //   7: 'July',
+  //   8: 'August',
+  //   9: 'September',
+  //   10: 'October',
+  //   11: 'November',
+  //   12: 'December',
+  // };
 
-  const monthName = monthMap[month];
+  // const monthName = monthMap[month];
 
-  const user = await UserWeight.findOne({ owner });
+  // const user = await UserWeight.findOne({ owner });
 
-  const monthData = user[monthName] || [];
+  // const monthData = user[monthName] || [];
 
   res.status(200).json({
     totalWater,
