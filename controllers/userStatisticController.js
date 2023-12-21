@@ -20,8 +20,14 @@ const getUserStatistic = async (req, res, next) => {
     },
     {
       $group: {
-        _id: null,
-        totalWater: { $sum: '$value' },
+        _id: '$owner',
+        totalWater: {
+          $push: {
+            date: '$date',
+            water: '$value',
+            id: '$_id',
+          },
+        },
       },
     },
   ]);
@@ -39,8 +45,14 @@ const getUserStatistic = async (req, res, next) => {
     },
     {
       $group: {
-        _id: null,
-        totalCalories: { $sum: '$totalCalories' },
+        _id: '$owner',
+        totalCalories: {
+          $push: {
+            date: '$date',
+            totalCalories: '$totalCalories',
+            id: '$_id',
+          },
+        },
       },
     },
   ]);
@@ -48,6 +60,29 @@ const getUserStatistic = async (req, res, next) => {
   const totalCalories =
     userFoodIntakes.length > 0 ? userFoodIntakes[0].totalCalories : 0;
 
+  const userWeightIntakes = await UserWeight.aggregate([
+    {
+      $match: {
+        date: { $regex: `.*-${monthStr}-.*` },
+        owner,
+      },
+    },
+    {
+      $group: {
+        _id: '$owner',
+        totalWeight: {
+          $push: {
+            date: '$date',
+            weight: '$weight',
+            id: '$_id',
+          },
+        },
+      },
+    },
+  ]);
+
+  const totalWeight =
+    userWeightIntakes.length > 0 ? userWeightIntakes[0].currentWeight : 0;
   // ------------------ Monthly Arr Weight -------------- //
 
   const monthMap = {
@@ -74,8 +109,8 @@ const getUserStatistic = async (req, res, next) => {
   res.status(200).json({
     totalWater,
     totalCalories,
+    totalWeight,
     month: getMonthName(monthStr),
-    [monthName.toLowerCase()]: monthData,
   });
 };
 
