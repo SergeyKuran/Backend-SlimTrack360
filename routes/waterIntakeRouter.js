@@ -14,6 +14,10 @@ router.post(
   waterIntakeController.addWater,
 );
 
-router.delete('/water-intake', waterIntakeController.resetWater);
+router.delete(
+  '/water-intake',
+  bodyValidator(AddWaterIntakeSchema),
+  waterIntakeController.resetWater,
+);
 
 export default router;

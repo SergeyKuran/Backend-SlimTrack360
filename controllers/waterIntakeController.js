@@ -25,9 +25,11 @@ const addWaterIntake = async (req, res) => {
   }
 };
 
-const deleteWaterIntake = async (req, res, next) => {
+const deleteWaterIntake = async (req, res) => {
   const { date } = req.body;
   const { _id: owner } = req.user;
+
+  console.log('Body: >>>>>', req.body);
 
   const filter = { date, owner };
 
