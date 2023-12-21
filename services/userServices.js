@@ -35,7 +35,6 @@ const updateUser = async (
   userId,
   userData,
   pathAvatar,
-  date,
   owner,
   currentWeight,
 ) => {
@@ -66,8 +65,8 @@ const updateUser = async (
 
   // Update Weight
   // Add obj with weight
-  const formattedDate = format(new Date(date), 'yyyy-MM-dd');
-  const currentMonth = format(new Date(date), 'MMMM');
+  const formattedDate = format(new Date(), 'yyyy-MM-dd');
+  const currentMonth = format(new Date(), 'MMMM');
 
   let userWeight = await UserWeight.findOne({ owner });
 
