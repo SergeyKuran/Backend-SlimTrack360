@@ -124,22 +124,6 @@ const weightUser = async (userId, currentWeight, date, owner) => {
   );
 
   // Add obj with weight
-  // const formattedDate = format(new Date(date), 'yyyy-MM-dd');
-  // const currentMonth = format(new Date(date), 'MMMM');
-
-  // let userWeight = await UserWeight.findOne({ owner });
-
-  // if (!userWeight[currentMonth]) {
-  //   userWeight[currentMonth] = [];
-  // }
-
-  // userWeight[currentMonth].push({
-  //   date: formattedDate,
-  //   weight: currentWeight,
-  // });
-
-  // await userWeight.save();
-
   let userWeight = await UserWeight.findOneAndUpdate(
     { owner },
     {},
