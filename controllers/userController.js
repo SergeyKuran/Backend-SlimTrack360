@@ -10,6 +10,7 @@ const current = async (req, res) => {
     age,
     height,
     currentWeight,
+    levelActivity,
     dailyGoalCalories,
     dailyGoalWater,
     dailyGoalElements,
@@ -23,6 +24,7 @@ const current = async (req, res) => {
     age,
     height,
     currentWeight,
+    levelActivity,
     dailyGoalCalories,
     dailyGoalWater,
     dailyGoalElements,
@@ -32,6 +34,7 @@ const current = async (req, res) => {
 const update = async (req, res) => {
   const { name, avatarUrl, sex, age, height, currentWeight, levelActivity } =
     await userServices.updateUser(
+      req.user,
       req.user._id,
       req.body,
       req.file ? req.file.path : '',

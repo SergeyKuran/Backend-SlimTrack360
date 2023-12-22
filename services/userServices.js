@@ -32,6 +32,7 @@ const currentUser = async userId => {
 };
 
 const updateUser = async (
+  userOnBase,
   userId,
   userData,
   pathAvatar,
@@ -40,9 +41,11 @@ const updateUser = async (
 ) => {
   const user = { ...userData };
 
+  const avatar = pathAvatar === '' ? userOnBase.avatarUrl : pathAvatar;
+
   const newUser = await User.findByIdAndUpdate(
     { _id: userId },
-    { $set: user, avatarUrl: pathAvatar },
+    { $set: user, avatarUrl: avatar },
     { new: true },
   );
 
