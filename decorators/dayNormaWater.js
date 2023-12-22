@@ -14,15 +14,15 @@ export const dayNormaWater = user => {
 
     switch (activeIndex) {
       case 1.2:
-        return Number((currentWeight * 0.03).toFixed(1));
+        return Number((currentWeight * 0.03 * 1000).toFixed(1));
       case 1.375:
-        return Number((currentWeight * 0.03 + 0.35).toFixed(1));
+        return Number(((currentWeight * 0.03 + 0.35) * 1000).toFixed(1));
       case 1.55:
-        return Number((currentWeight * 0.03 + 0.35).toFixed(1));
+        return Number(((currentWeight * 0.03 + 0.35) * 1000).toFixed(1));
       case 1.725:
-        return Number((currentWeight * 0.03 + 0.35).toFixed(1));
+        return Number(((currentWeight * 0.03 + 0.35) * 1000).toFixed(1));
       case 1.9:
-        return Number((currentWeight * 0.03 + 0.7).toFixed(1));
+        return Number(((currentWeight * 0.03 + 0.7) * 1000).toFixed(1));
 
       default:
         break;
