@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import authenticate from '../helpers/authenticate.js';
 import { bodyValidator } from '../decorators/bodyValidator.js';
-import { AddWaterIntakeSchema } from '../schemas/waterIntakeSchemas.js';
+import {
+  AddWaterIntakeSchema,
+  RemoveWaterIntakeSchema,
+} from '../schemas/waterIntakeSchemas.js';
 import waterIntakeController from '../controllers/waterIntakeController.js';
 
 const router = Router();
@@ -16,7 +19,7 @@ router.post(
 
 router.delete(
   '/water-intake',
-  bodyValidator(AddWaterIntakeSchema),
+  bodyValidator(RemoveWaterIntakeSchema),
   waterIntakeController.resetWater,
 );
 
