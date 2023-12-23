@@ -13,7 +13,8 @@ const { SECRET_KEY, BASE_URL } = process.env;
 
 const signUp = async body => {
   const { email, password } = body;
-  const user = await User.findOne({ email });
+
+  const user = await User.findOne({ email: email.toLowerCase() });
 
   if (user) throw HttpError(409, `Email "${email}" in use`);
 
@@ -40,6 +41,7 @@ const signUp = async body => {
 
   return await User.create({
     ...body,
+    email: email.toLowerCase(),
     password: hashPassword,
     verificationToken,
     date: date.getDate(),
