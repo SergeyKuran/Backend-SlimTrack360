@@ -60,56 +60,33 @@ const getUserStatistic = async (req, res, next) => {
   const totalCalories =
     userFoodIntakes.length > 0 ? userFoodIntakes[0].totalCalories : 0;
 
-  const userWeightIntakes = await UserWeight.aggregate([
-    {
-      $match: {
-        date: { $regex: `.*-${monthStr}-.*` },
-        owner,
-      },
-    },
-    {
-      $group: {
-        _id: '$owner',
-        totalWeight: {
-          $push: {
-            date: '$date',
-            weight: '$weight',
-            id: '$_id',
-          },
-        },
-      },
-    },
-  ]);
-
-  const totalWeight =
-    userWeightIntakes.length > 0 ? userWeightIntakes[0].currentWeight : 0;
   // ------------------ Monthly Arr Weight -------------- //
 
-  // const monthMap = {
-  //   1: 'January',
-  //   2: 'February',
-  //   3: 'March',
-  //   4: 'April',
-  //   5: 'May',
-  //   6: 'June',
-  //   7: 'July',
-  //   8: 'August',
-  //   9: 'September',
-  //   10: 'October',
-  //   11: 'November',
-  //   12: 'December',
-  // };
+  const monthMap = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December',
+  };
 
-  // const monthName = monthMap[month];
+  const monthName = monthMap[month];
 
-  // const user = await UserWeight.findOne({ owner });
+  const user = await UserWeight.findOne({ owner });
 
-  // const monthData = user[monthName] || [];
+  const monthData = user[monthName] || [];
 
   res.status(200).json({
     totalWater,
     totalCalories,
-    totalWeight,
+    totalWeight: monthData,
     month: getMonthName(monthStr),
   });
 };
