@@ -27,7 +27,7 @@ export const generateVerificationEmailHTML = (verificationToken, BASE_URL) => `
       <div class="container">
         <h2>Verify Your Email</h2>
         <p>Click the following link to verify your email address:</p>
-        <a target="_blank" class="verification-link" href="https://maksymbora.github.io/team-project-SlimTrack360/verify/?${verificationToken}">Verify Email</a>
+        <a target="_blank" class="verification-link" href="https://maksymbora.github.io/team-project-SlimTrack360/verify/${verificationToken}">Verify Email</a>
         <p>If you did not sign up for our service, you can safely ignore this email.</p>
       </div>
     </body>
