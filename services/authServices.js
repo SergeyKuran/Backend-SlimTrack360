@@ -55,6 +55,8 @@ const signIn = async body => {
 
   if (!userFind) throw HttpError(403, 'Email or password is wrong');
 
+  await User.findByIdAndUpdate({ _id: userFind._id }, { verify: true });
+
   if (!userFind.verify)
     throw HttpError(403, 'Access is forbidden. Please verify your account.');
 
