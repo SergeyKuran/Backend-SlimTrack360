@@ -81,7 +81,7 @@ const getUserStatistic = async (req, res, next) => {
 
   const user = await UserWeight.findOne({ owner });
 
-  const monthData = user[monthName] || [];
+  const monthData = user[monthName] || 0;
 
   res.status(200).json({
     totalWater,
