@@ -69,7 +69,7 @@ const signout = async (req, res) => {
 
 const verify = async (req, res) => {
   const { verificationToken } = req.params;
-
+  console.log(verificationToken);
   const {
     name,
     email,
@@ -83,6 +83,7 @@ const verify = async (req, res) => {
     dailyGoalCalories,
     dailyGoalWater,
     dailyGoalElements,
+    status,
   } = await authServices.verifyEmail(verificationToken);
 
   res.json({
@@ -98,6 +99,7 @@ const verify = async (req, res) => {
     dailyGoalCalories,
     dailyGoalWater,
     dailyGoalElements,
+    status,
   });
 };
 

@@ -113,6 +113,7 @@ const deleteFoodIntake = async (req, res, next) => {
   try {
     const { _id, lunch, dinner, breakfast, snack } = req.body;
 
+    console.log('FOOD CONTROLLER: >>>', _id);
     if (!_id || (!lunch && !dinner && !breakfast && !snack)) {
       return res.status(400).json({
         error: 'Missing _id or section field in the request',

@@ -122,6 +122,8 @@ const passwordReset = async (email, _id) => {
 const verifyEmail = async verificationToken => {
   const user = await User.findOne({ verificationToken });
 
+  console.log(user);
+
   if (!user) throw HttpError(404, 'Verification not succsesfull try again');
 
   const payload = {
@@ -130,12 +132,15 @@ const verifyEmail = async verificationToken => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
 
+  const status = token ? 'fulfilled' : 'rejected';
+
   const newUser = await User.findByIdAndUpdate(
     user._id,
     {
       verify: true,
       verificationToken: null,
       token,
+      status,
     },
     { new: true },
   );
