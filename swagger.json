@@ -1510,7 +1510,7 @@
                   "type": "number",
                   "example": 14
                 },
-                " protein": {
+                "protein": {
                   "type": "number",
                   "example": 0.3
                 },
