@@ -111,25 +111,30 @@ const updateProductFoodIntake = async (req, res, next) => {
 
 const deleteFoodIntake = async (req, res, next) => {
   try {
-    const { date, breakfast, lunch, dinner, snack } = req.body;
-    const { _id: owner } = req.user;
+    const { _id, lunch, dinner, breakfast, snack } = req.body;
 
-    const formattedDate = format(new Date(date), 'yyyy-MM-dd');
+    // Проверяем наличие ID и области приема пищи в запросе
+    if (!_id || (!lunch && !dinner && !breakfast && !snack)) {
+      return res.status(400).json({
+        error: 'Missing _id or section field in the request',
+      });
+    }
 
-    let targetSection = null;
-    let targetProducts = null;
+    let targetSection = '';
+    let targetProducts = [];
 
-    if (breakfast && breakfast.products && breakfast.products.length > 0) {
-      targetSection = 'breakfast';
-      targetProducts = breakfast.products;
-    } else if (lunch && lunch.products && lunch.products.length > 0) {
-      targetSection = 'lunch';
+    // Определяем целевой раздел и его продукты
+    if (lunch && lunch.products) {
+      targetSection = 'lunch.products';
       targetProducts = lunch.products;
-    } else if (dinner && dinner.products && dinner.products.length > 0) {
-      targetSection = 'dinner';
+    } else if (dinner && dinner.products) {
+      targetSection = 'dinner.products';
       targetProducts = dinner.products;
-    } else if (snack && snack.products && snack.products.length > 0) {
-      targetSection = 'snack';
+    } else if (breakfast && breakfast.products) {
+      targetSection = 'breakfast.products';
+      targetProducts = breakfast.products;
+    } else if (snack && snack.products) {
+      targetSection = 'snack.products';
       targetProducts = snack.products;
     } else {
       return res.status(400).json({
@@ -137,32 +142,27 @@ const deleteFoodIntake = async (req, res, next) => {
       });
     }
 
-    const productId = targetProducts[0].productId;
+    // Формируем запрос для удаления продуктов
+    const updateOperation = { [targetSection]: [] };
 
-    const query = { date: formattedDate, owner };
-
-    const updateOperation = {
-      $pull: {
-        [`${targetSection}.products`]: { productId },
-      },
-    };
-
-    const updatedIntake = await FoodIntake.findOneAndUpdate(
-      query,
-      updateOperation,
+    // Находим объект по ID и очищаем указанный раздел
+    const updatedIntake = await FoodIntake.findByIdAndUpdate(
+      _id,
+      { $set: updateOperation },
       { new: true },
     );
 
+    // Если объект не найден, возвращаем ошибку
     if (!updatedIntake) {
       return res.status(404).json({
-        error: 'Food intake not found or product not in specified section',
+        error: 'Food intake not found',
       });
     }
 
-    await updateIntakeTotals(updatedIntake);
-
     return res.status(200).json({
-      message: `Product deleted from ${targetSection}`,
+      message: `Products in ${
+        targetSection.split('.')[0]
+      } cleared successfully`,
       data: updatedIntake,
     });
   } catch (error) {

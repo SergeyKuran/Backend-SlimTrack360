@@ -53,7 +53,7 @@ const FoodIntakeSchema = Joi.object({
 });
 
 const DeleteFoodIntakeSchema = Joi.object({
-  date: Joi.date().max('now').required(),
+  _id: Joi.string().required(),
   breakfast: Joi.object({
     products: Joi.array().items(
       Joi.object({
