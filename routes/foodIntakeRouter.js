@@ -21,7 +21,7 @@ router.put(
 );
 
 router.delete(
-  '/food-intake/',
+  '/food-intake',
   bodyValidator(FoodIntakeSchema.DeleteFoodIntakeSchema),
   foodIntakeController.deleteFood,
 );

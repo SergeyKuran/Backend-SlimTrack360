@@ -158,6 +158,7 @@ const deleteFoodIntake = async (req, res, next) => {
         error: 'Food intake not found',
       });
     }
+    await updateIntakeTotals(updatedIntake);
 
     return res.status(200).json({
       message: `Products in ${
