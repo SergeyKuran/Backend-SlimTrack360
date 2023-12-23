@@ -113,7 +113,6 @@ const deleteFoodIntake = async (req, res, next) => {
   try {
     const { _id, lunch, dinner, breakfast, snack } = req.body;
 
-    // Проверяем наличие ID и области приема пищи в запросе
     if (!_id || (!lunch && !dinner && !breakfast && !snack)) {
       return res.status(400).json({
         error: 'Missing _id or section field in the request',
@@ -123,7 +122,6 @@ const deleteFoodIntake = async (req, res, next) => {
     let targetSection = '';
     let targetProducts = [];
 
-    // Определяем целевой раздел и его продукты
     if (lunch && lunch.products) {
       targetSection = 'lunch.products';
       targetProducts = lunch.products;
@@ -142,17 +140,14 @@ const deleteFoodIntake = async (req, res, next) => {
       });
     }
 
-    // Формируем запрос для удаления продуктов
     const updateOperation = { [targetSection]: [] };
 
-    // Находим объект по ID и очищаем указанный раздел
     const updatedIntake = await FoodIntake.findByIdAndUpdate(
       _id,
       { $set: updateOperation },
       { new: true },
     );
 
-    // Если объект не найден, возвращаем ошибку
     if (!updatedIntake) {
       return res.status(404).json({
         error: 'Food intake not found',
