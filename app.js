@@ -9,6 +9,11 @@ import waterIntakeRouter from './routes/waterIntakeRouter.js';
 import errorNotFound from './helpers/Error/errorNotFound.js';
 import globalError from './helpers/Error/globalError.js';
 import userStatistics from './routes/userStatisticRouter.js';
+import { readFileSync } from 'fs';
+import swaggerUi from 'swagger-ui-express';
+
+const rawdata = readFileSync('./swagger.json');
+const swaggerDocument = JSON.parse(rawdata);
 
 const app = express();
 
@@ -24,6 +29,8 @@ app.use('/api/user', userRouter);
 app.use('/api/user', foodIntakeRouter);
 app.use('/api/user', waterIntakeRouter);
 app.use('/api/user', userStatistics);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(errorNotFound);
 
