@@ -92,6 +92,7 @@ const signIn = async body => {
     dailyGoalCalories,
     dailyGoalWater,
     dailyGoalElements,
+    verify,
   } = userFind;
 
   const user = {
@@ -108,6 +109,7 @@ const signIn = async body => {
     dailyGoalWater,
     dailyGoalElements,
     token,
+    verify,
   };
 
   return user;

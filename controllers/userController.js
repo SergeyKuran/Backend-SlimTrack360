@@ -14,6 +14,7 @@ const current = async (req, res) => {
     dailyGoalCalories,
     dailyGoalWater,
     dailyGoalElements,
+    verify,
   } = await userServices.currentUser(req.user._id);
 
   res.json({
@@ -28,6 +29,7 @@ const current = async (req, res) => {
     dailyGoalCalories,
     dailyGoalWater,
     dailyGoalElements,
+    verify,
   });
 };
 

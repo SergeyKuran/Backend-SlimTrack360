@@ -24,6 +24,7 @@ const currentUser = async userId => {
       dailyGoalCalories,
       dailyGoalWater,
       dailyGoalElements: { protein, fat, carbonohidrates },
+      verify: true,
     },
     { new: true },
   );
