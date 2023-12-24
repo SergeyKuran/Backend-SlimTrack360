@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
+import { documentSucssesfullVerifacation } from '../helpers/documentSucssesfullVarification.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
 import { UserWeight } from '../models/userWeight.js';
@@ -31,21 +32,18 @@ const signUp = async (req, res) => {
     await userWeight.save();
   }
 
-  res.json({ message: 'Created' });
+  res.status(201).json({ message: 'Created' });
 };
 
 // ---------------  Log in ------------------- //
 const signIn = async (req, res) => {
   const user = await authServices.signIn(req.body);
 
-  res.json({ user, message: 'Login successful' });
+  res.status(200).json({ user, message: 'Login successful' });
 };
 
 const passwordForgot = async (req, res) => {
-  const password = await authServices.passwordReset(
-    req.body.email,
-    req.user._id,
-  );
+  const password = await authServices.passwordReset(req.body.email);
   if (!password) throw HttpError(400, 'Sorry, user not found');
 
   const { email } = req.body;
@@ -70,37 +68,10 @@ const signout = async (req, res) => {
 const verify = async (req, res) => {
   const { verificationToken } = req.params;
   console.log(verificationToken);
-  const {
-    name,
-    email,
-    avatarUrl,
-    sex,
-    age,
-    height,
-    verify,
-    token,
-    currentWeight,
-    dailyGoalCalories,
-    dailyGoalWater,
-    dailyGoalElements,
-    status,
-  } = await authServices.verifyEmail(verificationToken);
 
-  res.json({
-    name,
-    email,
-    avatarUrl,
-    sex,
-    age,
-    verify,
-    token,
-    height,
-    currentWeight,
-    dailyGoalCalories,
-    dailyGoalWater,
-    dailyGoalElements,
-    status,
-  });
+  await authServices.verifyEmail(verificationToken);
+
+  res.send(`${documentSucssesfullVerifacation()}`);
 };
 
 export default {
