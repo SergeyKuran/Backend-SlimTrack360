@@ -36,7 +36,7 @@ export const documentSucssesfullVerifacation = () => {
     <p>Ваш обліковий запис було успішно верифіковано. Тепер ви можете <a
     target="_blank"
     class="verification-signin"
-    href="https://healthyhub-emsa.onrender.com/api/signin"
+    href="https://healthyhub-emsa.onrender.com/api/auth/signin"
   >
     Увійти
   </a></p>
