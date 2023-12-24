@@ -57,13 +57,7 @@ const signIn = async body => {
 
   if (!userFind) throw HttpError(403, 'Email or password is wrong');
 
-  const userVerify = await User.findByIdAndUpdate(
-    { _id: userFind._id },
-    { verify: true },
-    { new: true },
-  );
-
-  if (!userVerify.verify)
+  if (!userFind.verify)
     throw HttpError(403, 'Access is forbidden. Please verify your account.');
 
   const comparePassword = await bcryptjs.compare(
@@ -117,14 +111,17 @@ const signIn = async body => {
   return user;
 };
 
-const passwordReset = async (email, _id) => {
+const passwordReset = async email => {
   const userFind = await User.findOne({ email });
   if (!userFind) throw HttpError(404, `User with ${email} is missing`);
 
   const newPassword = nanoid();
   const hashNewPassword = await bcryptjs.hash(newPassword, 8);
 
-  await User.findByIdAndUpdate({ _id }, { password: hashNewPassword });
+  await User.findByIdAndUpdate(
+    { _id: userFind._id },
+    { password: hashNewPassword },
+  );
 
   return newPassword;
 };
@@ -132,9 +129,13 @@ const passwordReset = async (email, _id) => {
 const verifyEmail = async verificationToken => {
   const user = await User.findOne({ verificationToken });
 
-  console.log(user);
-
   if (!user) throw HttpError(404, 'Verification not succsesfull try again');
+
+  await User.findByIdAndUpdate(
+    { _id: user._id },
+    { verify: true },
+    { new: true },
+  );
 
   const payload = {
     id: user._id,

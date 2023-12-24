@@ -16,7 +16,7 @@ router.post('/signin', bodyValidator(schema.login), authController.signin);
 
 router.post(
   '/forgot-password',
-  authenticate,
+
   bodyValidator(schema.passwordReset),
   authController.passwordForgot,
 );
