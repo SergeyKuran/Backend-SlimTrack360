@@ -15,7 +15,7 @@ export const documentSucssesfullVerification = () => {
      position: absolute;
      top: 50%;
      left: 50%;
-     width: 50vw;
+     width: 40vw;
      margin: 0 auto;
      padding: 20px;
      background: black;
@@ -39,11 +39,15 @@ export const documentSucssesfullVerification = () => {
     a {
       display: block;
       padding: 10px;
-      margin: 20px 0;
+      margin: 20px auto;
+      width: 20%;
+      max-width: 300px;
       background-color: rgb(227, 255, 168);
       color: black;
       text-align: center;
       text-decoration: none;
+      font-size: 16px;
+      border-radius: 12px;
       cursor: pointer;
     }
   </style>
