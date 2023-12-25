@@ -1630,14 +1630,6 @@
           }
         },
         "example": {
-          "Stats": [
-            {
-              "date": "2023-11-01",
-              "water": 1550,
-              "weight": 55,
-              "totalCalories": 1800
-            }
-          ],
           "totalWater": [
             {
               "date": "2023-12-18",
