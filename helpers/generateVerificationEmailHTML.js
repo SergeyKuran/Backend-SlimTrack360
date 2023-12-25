@@ -10,8 +10,9 @@ export const generateVerificationEmailHTML = verificationToken => {
         }
 
         .container {
-          width: 100%;
-          margin: 0 auto;
+          width: 95%;
+          max-width: 1200px;
+          text-align: center;
           padding: 20px;
           background: black;
           color: rgb(182, 182, 182);
@@ -24,7 +25,9 @@ export const generateVerificationEmailHTML = verificationToken => {
         .verification-link {
           display: block;
           padding: 10px;
-          margin: 20px 0;
+          width: 30vw;
+          max-width: 200px;
+          margin: 20px auto;
           background-color: rgb(227, 255, 168);
           color: black;
           text-align: center;
