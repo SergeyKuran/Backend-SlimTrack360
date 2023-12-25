@@ -1,45 +1,58 @@
-export const documentSucssesfullVerifacation = () => {
-  return `<!DOCTYPE html>
+export const documentSucssesfullVerification = () => {
+  return `
+  <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Верифікація успішна</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+     body {
+     font-family: Arial, sans-serif;
+     background: azure;
+    }
 
-        h1 {
-            color: green;
-        }
+    .container {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 50vw;
+     margin: 0 auto;
+     padding: 20px;
+     background: black;
+     color: rgb(182, 182, 182);
+     border-radius: 12px;
+     border: 1px solid;
+     transform: translate(-50%, -50%);
+    }
 
-        p {
-            font-size: 18px;
-        }
-         .verification-signin {
-          padding: 2px;
-          margin: 20px 0;
-          background-color: #4CAF50;
-          color: white;
-          text-align: center;
-          text-decoration: none;
-          font-size: 16px;
-          border-radius: 5px;
-        }
-    </style>
+    h1 {
+     text-align: center;
+     color: green;
+    }
+
+    p {
+     color: rgb(182, 182, 182);
+     font-size: 16px;
+     text-align: center;
+    }
+
+    a {
+      display: block;
+      padding: 10px;
+      margin: 20px 0;
+      background-color: rgb(227, 255, 168);
+      color: black;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <h1>Верифікація успішна!</h1>
-    <p>Ваш обліковий запис було успішно верифіковано. Тепер ви можете <a
-    target="_blank"
-    class="verification-signin"
-    href="https://healthyhub-emsa.onrender.com/api/auth/signin"
-  >
-    Увійти
-  </a></p>
+  <div class="container">
+    <h1>Verification Successful!</h1>
+    <p>Your account has been successfully verified. You can now <a target="_blank" href="https://maksymbora.github.io/team-project-SlimTrack360/signin">Sign In</a></p>
+  </div>
 </body>
 </html>`;
 };
