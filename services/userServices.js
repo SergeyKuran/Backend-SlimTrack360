@@ -88,19 +88,26 @@ const updateUser = async (
   return updatedUser;
 };
 
-const goalUser = async (userId, goal) => {
+const goalUser = async (user, goal = user.goal) => {
+  const goalArray = ['Lose Fat', 'Maintain', 'Gain Muscle'];
+
+  if (!goalArray.includes(goal)) throw HttpError(404, 'This goal not found!');
+
   const newUser = await User.findByIdAndUpdate(
-    { _id: userId },
+    { _id: user._id },
     { goal },
     { new: true },
   );
 
-  const { Protein, Fat, Carbonohidrates } = calculateMacros(newUser);
+  const { protein, fat, carbonohidrates } = calculateMacros(
+    newUser,
+    user.dailyGoalCalories,
+  );
 
   const updatedUser = await User.findByIdAndUpdate(
-    { _id: userId },
+    { _id: user._id },
     {
-      dailyGoalElements: { Protein, Fat, Carbonohidrates },
+      dailyGoalElements: { protein, fat, carbonohidrates },
     },
     { new: true },
   );
@@ -108,7 +115,7 @@ const goalUser = async (userId, goal) => {
   return updatedUser;
 };
 
-const weightUser = async (userId, currentWeight, date, owner) => {
+const weightUser = async (userId, currentWeight, owner) => {
   const newUser = await User.findByIdAndUpdate(
     { _id: userId },
     { currentWeight },
@@ -122,7 +129,7 @@ const weightUser = async (userId, currentWeight, date, owner) => {
     { _id: userId },
     {
       dailyGoalCalories: newDailyLevel,
-      dailtyGoalWater: newNormaWater,
+      dailyGoalWater: newNormaWater,
     },
     { new: true },
   );
@@ -130,12 +137,11 @@ const weightUser = async (userId, currentWeight, date, owner) => {
   // Add obj with weight
   let userWeight = await UserWeight.findOneAndUpdate(
     { owner },
-    {},
     { upsert: true, new: true, setDefaultsOnInsert: true },
   );
 
-  const formattedDate = format(new Date(date), 'yyyy-MM-dd');
-  const currentMonth = format(new Date(date), 'MMMM');
+  const formattedDate = format(new Date(), 'yyyy-MM-dd');
+  const currentMonth = format(new Date(), 'MMMM');
 
   if (!userWeight[currentMonth]) {
     userWeight[currentMonth] = [];
