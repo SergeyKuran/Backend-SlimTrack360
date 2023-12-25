@@ -86,7 +86,7 @@ const getUserStatistic = async (req, res, next) => {
   res.status(200).json({
     totalWater,
     totalCalories,
-    totalWeight: monthData,
+    monthData,
     month: getMonthName(monthStr),
   });
 };
