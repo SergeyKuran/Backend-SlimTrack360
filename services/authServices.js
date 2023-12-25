@@ -112,7 +112,7 @@ const signIn = async body => {
 };
 
 const passwordReset = async email => {
-  const userFind = await User.findOne({ email });
+  const userFind = await User.findOne({ email: email.toLowerCase() });
   if (!userFind) throw HttpError(404, `User with ${email} is missing`);
 
   const newPassword = nanoid();

@@ -58,24 +58,23 @@ const update = async (req, res) => {
 };
 
 const goal = async (req, res) => {
-  const { goal } = await userServices.goalUser(req.user._id, req.body.goal);
+  const user = await userServices.goalUser(req.user, req.body.goal);
 
   res.json({
-    goal,
+    user,
     message: 'Goal changed',
   });
 };
 
 const weight = async (req, res) => {
-  const { currentWeight } = await userServices.weightUser(
+  const user = await userServices.weightUser(
     req.user._id,
     req.body.currentWeight,
-    req.body.date,
     req.user._id,
   );
 
   res.json({
-    currentWeight,
+    user,
     message: 'Weight changed',
   });
 };
