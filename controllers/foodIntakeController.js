@@ -68,7 +68,6 @@ const updateProductFoodIntake = async (req, res, next) => {
   let existingFoodIntake = await FoodIntake.findById(id);
 
   if (!existingFoodIntake) {
-    console.log('Food Intake not found');
     return res.status(404).json({ message: 'Food Intake not found' });
   }
 
@@ -113,7 +112,6 @@ const deleteFoodIntake = async (req, res, next) => {
   try {
     const { _id, lunch, dinner, breakfast, snack } = req.body;
 
-    console.log('FOOD CONTROLLER: >>>', _id);
     if (!_id || (!lunch && !dinner && !breakfast && !snack)) {
       return res.status(400).json({
         error: 'Missing _id or section field in the request',
