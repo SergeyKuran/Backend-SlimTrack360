@@ -36,24 +36,18 @@ const current = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const { name, avatarUrl, sex, age, height, currentWeight, levelActivity } =
-    await userServices.updateUser(
-      req.user,
-      req.user._id,
-      req.body,
-      req.file ? req.file.path : '',
-      req.user._id,
-      req.body.currentWeight,
-    );
+  const user = await userServices.updateUser(
+    req.user,
+    req.user._id,
+    req.body,
+    req.file ? req.file.path : '',
+    req.user._id,
+    req.body.currentWeight,
+    req.body.date,
+  );
 
   res.json({
-    name,
-    avatarUrl,
-    sex,
-    age,
-    height,
-    currentWeight,
-    levelActivity,
+    user,
   });
 };
 
@@ -71,6 +65,7 @@ const weight = async (req, res) => {
     req.user._id,
     req.body.currentWeight,
     req.user._id,
+    req.user._date,
   );
 
   res.json({
