@@ -1148,31 +1148,125 @@
       "WeightResponse": {
         "type": "object",
         "properties": {
-          "type": "object",
-          "description": "New weight",
-          "properties": {
-            "currentWeight": {
-              "type": "object",
-              "properties": {
-                "currentWeight": {
-                  "type": "sting",
-                  "description": "New weight",
-                  "example": 110
-                },
-                "message": {
-                  "type": "sting",
-                  "description": "Status",
-                  "example": "Weight changed"
+          "user": {
+            "type": "object",
+            "properties": {
+              "dailyGoalElements": {
+                "type": "object",
+                "properties": {
+                  "protein": {
+                    "type": "integer",
+                    "description": "User's daily goal for protein intake"
+                  },
+                  "fat": {
+                    "type": "integer",
+                    "description": "User's daily goal for fat intake"
+                  },
+                  "carbonohidrates": {
+                    "type": "integer",
+                    "description": "User's daily goal for carbohydrates intake"
+                  }
                 }
+              },
+              "_id": {
+                "type": "string",
+                "description": "User ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email address"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's password hash"
+              },
+              "token": {
+                "type": "string",
+                "description": "User's authentication token"
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "URL of user's avatar image"
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "Verification status"
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Token used for verification"
+              },
+              "goal": {
+                "type": "string",
+                "description": "User's goal"
+              },
+              "sex": {
+                "type": "string",
+                "description": "User's gender"
+              },
+              "age": {
+                "type": "integer",
+                "description": "User's age"
+              },
+              "height": {
+                "type": "integer",
+                "description": "User's height"
+              },
+              "currentWeight": {
+                "type": "integer",
+                "description": "User's current weight"
+              },
+              "levelActivity": {
+                "type": "integer",
+                "description": "User's activity level"
+              },
+              "dailyGoalCalories": {
+                "type": "integer",
+                "description": "User's daily goal for calories intake"
+              },
+              "dailyGoalWater": {
+                "type": "integer",
+                "description": "User's daily goal for water intake"
               }
             }
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message"
           }
         },
         "example": {
-          "currentWeight": 110,
+          "user": {
+            "dailyGoalElements": {
+              "protein": 236,
+              "fat": 70,
+              "carbonohidrates": 393
+            },
+            "_id": "6580e36b2e9c9a23a28c844f",
+            "name": "MaksBora",
+            "email": "maksTest@ukr.net",
+            "password": "$2a$10$Jaz7FBM0AGU8GFtKG0Fc6.7NqGBbsgZZpYN9QgDAkZ0QqJlwz4LQi",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODBlMzZiMmU5YzlhMjNhMjhjODQ0ZiIsImlhdCI6MTcwMzUzOTgxNCwiZXhwIjoyMDE5MTE1ODE0fQ.JwIIhNhbACrhmiQG6bss4E9jOtQmoec1sT0WCbfKrW4",
+            "avatarUrl": "https://res.cloudinary.com/dou7da1tx/image/upload/v1703545203/avatars/avatar3.jpg.jpg",
+            "verify": true,
+            "verificationToken": "8TgmBwYb3RJnyC1AyAPaG",
+            "goal": "Maintain",
+            "sex": "male",
+            "age": 31,
+            "height": 190,
+            "currentWeight": 120,
+            "levelActivity": 3,
+            "dailyGoalCalories": 3769,
+            "dailyGoalWater": 3950
+          },
           "message": "Weight changed"
         }
       },
+
       "WaterPostResponse": {
         "type": "object",
         "properties": {
