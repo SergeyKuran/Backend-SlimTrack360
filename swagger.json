@@ -633,7 +633,7 @@
     },
 
     "/user/statistics": {
-      "get": {
+      "post": {
         "tags": ["User"],
         "summary": "Get statistics of the user for the selected period",
         "parameters": [],
