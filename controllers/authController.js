@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
-import { documentSucssesfullVerifacation } from '../helpers/documentSucssesfullVarification.js';
+import { documentSucssesfullVerification } from '../helpers/documentSucssesfullVarification.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
 import { UserWeight } from '../models/userWeight.js';
@@ -67,11 +67,10 @@ const signout = async (req, res) => {
 
 const verify = async (req, res) => {
   const { verificationToken } = req.params;
-  console.log(verificationToken);
 
   await authServices.verifyEmail(verificationToken);
 
-  res.send(`${documentSucssesfullVerifacation()}`);
+  res.send(`${documentSucssesfullVerification()}`);
 };
 
 export default {
