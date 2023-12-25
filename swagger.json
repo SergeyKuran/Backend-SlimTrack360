@@ -1006,139 +1006,133 @@
           "age": {
             "type": "integer",
             "description": "User's age",
-            "example": 32
+            "example": 31
           },
           "height": {
             "type": "integer",
             "description": "User's height",
-            "example": 170
+            "example": 190
           },
           "currentWeight": {
             "type": "integer",
             "description": "User's weight",
-            "example": 55
+            "example": 82
           },
           "levelActivity": {
             "type": "number",
-            "description": "User's activity",
+            "description": "User's activity level",
             "example": 3
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of update",
+            "format": "date",
+            "example": "2023-11-18"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Maks"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "URL of user's avatar image",
+            "example": "https://res.cloudinary.com/dou7da1tx/image/upload/v1703545203/avatars/avatar3.jpg.jpg"
           }
         }
       },
       "UpdateResponse": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "Tom Hudson"
-          },
-          "sex": {
-            "type": "string",
-            "description": "User's gender",
-            "enum": ["female", "male"],
-            "example": "female"
-          },
-          "age": {
-            "type": "integer",
-            "description": "User's age",
-            "example": 32
-          },
-          "height": {
-            "type": "integer",
-            "description": "User's height",
-            "example": 170
-          },
-          "currentWeight": {
-            "type": "integer",
-            "description": "User's weight",
-            "example": 55
-          },
-          "levelActivity": {
-            "type": "number",
-            "description": "User's activity",
-            "example": 4
-          },
-          "avatarURL": {
-            "type": "string",
-            "example": "https://cdn-icons-png.flaticon.com/256/805/805439.png"
-          },
-          "dailyGoalElements": {
+          "user": {
             "type": "object",
             "properties": {
-              "protein": {
-                "type": "integer",
-                "description": "User's daily protein goal",
-                "example": 187
+              "dailyGoalElements": {
+                "type": "object",
+                "properties": {
+                  "protein": {
+                    "type": "integer",
+                    "description": "User's daily protein goal",
+                    "example": 161
+                  },
+                  "fat": {
+                    "type": "integer",
+                    "description": "User's daily fat goal",
+                    "example": 57
+                  },
+                  "carbonohidrates": {
+                    "type": "integer",
+                    "description": "User's daily carbohydrates goal",
+                    "example": 354
+                  }
+                }
               },
-              "fat": {
-                "type": "integer",
-                "description": "User's daily fat goal",
-                "example": 55
+              "_id": {
+                "type": "string",
+                "description": "User ID"
               },
-              "carbonohidrates": {
-                "type": "integer",
-                "description": "User's daily carbohydrates goal",
-                "example": 312
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's password"
+              },
+              "token": {
+                "type": "string",
+                "description": "User authentication token"
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "User verification status"
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Token for user verification"
+              },
+              "goal": {
+                "type": "string",
+                "description": "User's goal"
+              },
+              "waterIntake": {
+                "type": "string",
+                "description": "User's water intake status"
               }
             }
           },
-          "_id": {
+          "message": {
             "type": "string",
-            "description": "User ID"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password"
-          },
-          "token": {
-            "type": "string",
-            "description": "User authentication token"
-          },
-          "verify": {
-            "type": "boolean",
-            "description": "User verification status"
-          },
-          "verificationToken": {
-            "type": "string",
-            "description": "Token for user verification"
-          },
-          "goal": {
-            "type": "string",
-            "description": "User's goal"
-          },
-          "waterIntake": {
-            "type": "string",
-            "description": "User's water intake status"
+            "description": "Status message"
           }
         },
         "example": {
           "user": {
             "dailyGoalElements": {
-              "protein": 187,
-              "fat": 55,
-              "carbonohidrates": 312
+              "protein": 161,
+              "fat": 57,
+              "carbonohidrates": 354
             },
             "_id": "6580fbbe72a530a3efdcf12b",
-            "name": "maks",
+            "name": "Maks",
             "email": "maksTest3@ukr.net",
             "password": "$2a$10$mQ.0k0KB7eFnofVG5YrHTugL3/7V1Qlcd8uRJmXrFhGVJtgAnYxMC",
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODBmYmJlNzJhNTMwYTNlZmRjZjEyYiIsImlhdCI6MTcwMzAxNTU5NCwiZXhwIjoyMDE4NTkxNTk0fQ.bn4M6czZhaH42mvsn0eMUTqUGSH8rsoGuIfCypWPN0k",
             "avatarUrl": "",
             "verify": true,
             "verificationToken": "Y46_1NfIeMEYmcRnVcY7K",
-            "goal": "Maintain",
+            "goal": "Lose Fat",
             "sex": "female",
-            "age": 30,
-            "height": 185,
-            "currentWeight": 100,
-            "levelActivity": 2,
-            "dailyGoalCalories": 2496,
-            "dailyGoalWater": 3350,
+            "age": 31,
+            "height": 190,
+            "currentWeight": 82,
+            "levelActivity": 3,
+            "dailyGoalCalories": 2573,
+            "dailyGoalWater": 2810,
             "waterIntake": "0"
           },
           "message": "Goal changed"
