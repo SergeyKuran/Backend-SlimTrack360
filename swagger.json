@@ -1522,6 +1522,7 @@
               "properties": {
                 "date": {
                   "type": "string",
+                  "format": "date",
                   "example": "2023-11-01"
                 },
                 "water": {
@@ -1538,29 +1539,129 @@
                 }
               }
             }
+          },
+          "totalWater": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-12-18"
+                },
+                "water": {
+                  "type": "number",
+                  "example": 1500
+                },
+                "id": {
+                  "type": "string",
+                  "example": "6580e93f4c18eb148d84bcab"
+                }
+              }
+            }
+          },
+          "totalCalories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-12-19"
+                },
+                "totalCalories": {
+                  "type": "number",
+                  "example": 4200
+                },
+                "id": {
+                  "type": "string",
+                  "example": "6583296ee2bae70c0a23a46a"
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "6584cba91abe1a67c718c1a0"
+              },
+              "April": {
+                "type": "array",
+                "items": {}
+              },
+              "August": {
+                "type": "array",
+                "items": {}
+              },
+              "December": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "date": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2023-12-21"
+                    },
+                    "weight": {
+                      "type": "number",
+                      "example": 90
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "6584cba9fbff167e61a80213"
+                    }
+                  }
+                }
+              },
+              "February": {
+                "type": "array",
+                "items": {}
+              },
+              "January": {
+                "type": "array",
+                "items": {}
+              }
+            }
           }
         },
         "example": {
-          "stats": [
+          "Stats": [
             {
               "date": "2023-11-01",
               "water": 1550,
               "weight": 55,
               "totalCalories": 1800
-            },
-            {
-              "date": "2023-11-02",
-              "water": 1350,
-              "weight": 0,
-              "totalCalories": 1700
-            },
-            {
-              "date": "2023-11-03",
-              "water": 1400,
-              "weight": 0,
-              "totalCalories": 1950
             }
-          ]
+          ],
+          "totalWater": [
+            {
+              "date": "2023-12-18",
+              "water": 1500,
+              "id": "6580e93f4c18eb148d84bcab"
+            }
+          ],
+          "totalCalories": [
+            {
+              "date": "2023-12-19",
+              "totalCalories": 4200,
+              "id": "6583296ee2bae70c0a23a46a"
+            }
+          ],
+          "user": {
+            "_id": "6584cba91abe1a67c718c1a0",
+            "December": [
+              {
+                "date": "2023-12-21",
+                "weight": 90,
+                "_id": "6584cba9fbff167e61a80213"
+              }
+            ]
+          }
         }
       },
 
