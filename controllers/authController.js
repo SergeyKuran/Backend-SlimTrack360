@@ -51,10 +51,11 @@ const passwordForgot = async (req, res) => {
   const forgotPassword = {
     to: `${email}`,
     subject: 'Reset password!',
-    text: `You new password: ${password}! Please login again!`,
+    text: `You new password: ${password} Please login again!`,
   };
 
   await sendEmail(forgotPassword);
+  console.log(forgotPassword);
 
   res.json({ message: 'New password send on your email' });
 };

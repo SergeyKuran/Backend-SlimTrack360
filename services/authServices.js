@@ -116,6 +116,7 @@ const passwordReset = async email => {
   if (!userFind) throw HttpError(404, `User with ${email} is missing`);
 
   const newPassword = nanoid();
+
   const hashNewPassword = await bcryptjs.hash(newPassword, 8);
 
   await User.findByIdAndUpdate(
