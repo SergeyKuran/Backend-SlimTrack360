@@ -22,9 +22,9 @@ export const calculateMacros = (user, dailyGoalCalories) => {
 
   carbPercentage = 1 - (proteinPercentage + fatPercentage);
 
-  const protein = Math.round((proteinPercentage * dailyGoalCalories) / 4);
-  const fat = Math.round((fatPercentage * dailyGoalCalories) / 9);
-  const carbonohidrates = Math.round((carbPercentage * dailyGoalCalories) / 4);
+  const protein = Math.round(proteinPercentage * dailyGoalCalories);
+  const fat = Math.round(fatPercentage * dailyGoalCalories);
+  const carbonohidrates = Math.round(carbPercentage * dailyGoalCalories);
 
   return { protein, fat, carbonohidrates };
 };
