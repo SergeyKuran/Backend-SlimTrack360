@@ -6,6 +6,8 @@ import { sendEmail } from '../helpers/sendFromPost.js';
 import { UserWeight } from '../models/userWeight.js';
 import authServices from '../services/authServices.js';
 
+const { BASE_URL } = process.env;
+
 const signUp = async (req, res) => {
   const newUser = await authServices.signUp(req.body);
 
@@ -73,10 +75,21 @@ const verify = async (req, res) => {
   res.send(`${documentSucssesfullVerification()}`);
 };
 
+const googleAuth = async (req, res) => {
+  const { _id: id } = req.user;
+  const token = await authServices.google(id);
+
+  // res.redirect(`${BASE_URL}/?token=${token}`);
+  res.redirect(
+    `https://maksymbora.github.io/team-project-SlimTrack360/main/?token=${token}`,
+  );
+};
+
 export default {
   signup: ctrlWrapper(signUp),
   signin: ctrlWrapper(signIn),
   passwordForgot: ctrlWrapper(passwordForgot),
   signout: ctrlWrapper(signout),
   verify: ctrlWrapper(verify),
+  googleAuth: ctrlWrapper(googleAuth),
 };
