@@ -60,7 +60,7 @@ const passwordForgot = async (req, res) => {
   const forgotPassword = {
     to: `${email}`,
     subject: 'Reset password!',
-    text: `Your new password: <b>${password}</b> Please login again!`,
+    text: `Your new password: ${password} Please login again!`,
   };
 
   await sendEmail(forgotPassword);
