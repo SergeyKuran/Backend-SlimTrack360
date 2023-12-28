@@ -64,7 +64,6 @@ const passwordForgot = async (req, res) => {
   };
 
   await sendEmail(forgotPassword);
-  console.log(forgotPassword);
 
   res.json({ message: 'New password send on your email' });
 };
@@ -78,10 +77,8 @@ const signout = async (req, res) => {
 // ----- verification with redirect ---- //
 const verify = async (req, res) => {
   const { verificationToken } = req.params;
-  console.log('verificationToken Controller>>>>>', verificationToken);
 
   const user = await User.findOne({ verificationToken });
-  console.log('Service >>>>', user);
 
   if (!user) throw HttpError(404, 'Verification not succsesfull try again');
 
@@ -92,7 +89,7 @@ const verify = async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
 
   const status = token ? 'fulfilled' : 'rejected';
-  console.log('status>>>>', status);
+
   await User.findByIdAndUpdate(
     user._id,
     {
