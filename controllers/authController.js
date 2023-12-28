@@ -10,6 +10,8 @@ import jwt from 'jsonwebtoken';
 
 const { SECRET_KEY } = process.env;
 
+const { BASE_URL } = process.env;
+
 const signUp = async (req, res) => {
   const newUser = await authServices.signUp(req.body);
 
@@ -120,6 +122,15 @@ const verify = async (req, res) => {
   });
 };
 
+const googleAuth = async (req, res) => {
+  const { _id: id } = req.user;
+  const verificationToken = await authServices.google(id);
+
+  res.redirect(
+    `http://localhost:5173/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
+  );
+};
+
 // {
 //     "user": {
 //         "name": "rob",
@@ -144,10 +155,12 @@ const verify = async (req, res) => {
 //     }
 // }
 
+
 export default {
   signup: ctrlWrapper(signUp),
   signin: ctrlWrapper(signIn),
   passwordForgot: ctrlWrapper(passwordForgot),
   signout: ctrlWrapper(signout),
   verify: ctrlWrapper(verify),
+  googleAuth: ctrlWrapper(googleAuth),
 };

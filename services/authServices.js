@@ -133,11 +133,30 @@ const logout = async userId => {
   if (!user) throw HttpError(404, 'User not found');
 };
 
+const google = async id => {
+  const payload = {
+    id,
+  };
+
+  const token = await jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
+
+  const verificationToken = nanoid();
+
+  await User.findByIdAndUpdate(
+    { _id: id },
+    { token, verificationToken },
+    { new: true },
+  );
+
+  return verificationToken;
+};
+
 const authServices = {
   signUp,
   signIn,
   passwordReset,
   logout,
+  google,
 };
 
 export default authServices;
