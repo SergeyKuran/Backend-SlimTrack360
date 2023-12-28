@@ -118,7 +118,8 @@ const passwordReset = async email => {
 
   const newPassword = nanoid();
 
-  const hashNewPassword = await bcryptjs.hash(newPassword, 8);
+  const updatedPass = newPassword + '$';
+  const hashNewPassword = await bcryptjs.hash(updatedPass, 8);
 
   await User.findByIdAndUpdate(
     { _id: userFind._id },
