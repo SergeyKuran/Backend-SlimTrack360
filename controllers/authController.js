@@ -80,7 +80,7 @@ const googleAuth = async (req, res) => {
   const verificationToken = await authServices.google(id);
 
   res.redirect(
-    `https://localhost:5173/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
+    `http://localhost:5173/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
   );
 };
 
