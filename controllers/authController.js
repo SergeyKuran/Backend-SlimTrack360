@@ -79,9 +79,8 @@ const googleAuth = async (req, res) => {
   const { _id: id } = req.user;
   const token = await authServices.google(id);
 
-  // res.redirect(`${BASE_URL}/?token=${token}`);
   res.redirect(
-    `https://maksymbora.github.io/team-project-SlimTrack360/main/?token=${token}`,
+    `https://maksymbora.github.io/team-project-SlimTrack360/main?token=${token}`,
   );
 };
 
