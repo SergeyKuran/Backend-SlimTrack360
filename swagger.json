@@ -275,7 +275,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -633,7 +633,7 @@
     },
 
     "/user/statistics": {
-      "get": {
+      "post": {
         "tags": ["User"],
         "summary": "Get statistics of the user for the selected period",
         "parameters": [],
@@ -1006,102 +1006,261 @@
           "age": {
             "type": "integer",
             "description": "User's age",
-            "example": 32
+            "example": 31
           },
           "height": {
             "type": "integer",
             "description": "User's height",
-            "example": 170
+            "example": 190
           },
           "currentWeight": {
             "type": "integer",
             "description": "User's weight",
-            "example": 55
+            "example": 82
           },
           "levelActivity": {
             "type": "number",
-            "description": "User's activity",
+            "description": "User's activity level",
             "example": 3
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of update",
+            "format": "date",
+            "example": "2023-11-18"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Maks"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "URL of user's avatar image",
+            "example": "https://res.cloudinary.com/dou7da1tx/image/upload/v1703545203/avatars/avatar3.jpg.jpg"
           }
         }
       },
       "UpdateResponse": {
         "type": "object",
         "properties": {
-          "name": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "dailyGoalElements": {
+                "type": "object",
+                "properties": {
+                  "protein": {
+                    "type": "integer",
+                    "description": "User's daily protein goal",
+                    "example": 161
+                  },
+                  "fat": {
+                    "type": "integer",
+                    "description": "User's daily fat goal",
+                    "example": 57
+                  },
+                  "carbonohidrates": {
+                    "type": "integer",
+                    "description": "User's daily carbohydrates goal",
+                    "example": 354
+                  }
+                }
+              },
+              "_id": {
+                "type": "string",
+                "description": "User ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's password"
+              },
+              "token": {
+                "type": "string",
+                "description": "User authentication token"
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "User verification status"
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Token for user verification"
+              },
+              "goal": {
+                "type": "string",
+                "description": "User's goal"
+              },
+              "waterIntake": {
+                "type": "string",
+                "description": "User's water intake status"
+              }
+            }
+          },
+          "message": {
             "type": "string",
-            "description": "User's name",
-            "example": "Tom Hudson"
-          },
-          "sex": {
-            "type": "string",
-            "description": "User's gender",
-            "enum": ["female", "male"],
-            "example": "female"
-          },
-          "age": {
-            "type": "integer",
-            "description": "User's age",
-            "example": 32
-          },
-          "height": {
-            "type": "integer",
-            "description": "User's height",
-            "example": 170
-          },
-          "currentWeight": {
-            "type": "integer",
-            "description": "User's weight",
-            "example": 55
-          },
-          "levelActivity": {
-            "type": "number",
-            "description": "User's activity",
-            "example": 4
-          },
-          "avatarURL": {
-            "type": "string",
-            "example": "https://cdn-icons-png.flaticon.com/256/805/805439.png"
+            "description": "Status message"
           }
         },
         "example": {
-          "name": "Anna",
-          "gender": "female",
-          "age": 32,
-          "height": 175,
-          "weight": 65,
-          "activity": 1.3,
-          "avatarURL": "https://cdn-icons-png.flaticon.com/256/805/805439.png"
+          "user": {
+            "dailyGoalElements": {
+              "protein": 161,
+              "fat": 57,
+              "carbonohidrates": 354
+            },
+            "_id": "6580fbbe72a530a3efdcf12b",
+            "name": "Maks",
+            "email": "maksTest3@ukr.net",
+            "password": "$2a$10$mQ.0k0KB7eFnofVG5YrHTugL3/7V1Qlcd8uRJmXrFhGVJtgAnYxMC",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODBmYmJlNzJhNTMwYTNlZmRjZjEyYiIsImlhdCI6MTcwMzAxNTU5NCwiZXhwIjoyMDE4NTkxNTk0fQ.bn4M6czZhaH42mvsn0eMUTqUGSH8rsoGuIfCypWPN0k",
+            "avatarUrl": "",
+            "verify": true,
+            "verificationToken": "Y46_1NfIeMEYmcRnVcY7K",
+            "goal": "Lose Fat",
+            "sex": "female",
+            "age": 31,
+            "height": 190,
+            "currentWeight": 82,
+            "levelActivity": 3,
+            "dailyGoalCalories": 2573,
+            "dailyGoalWater": 2810,
+            "waterIntake": "0"
+          },
+          "message": "Goal changed"
         }
       },
+
       "WeightResponse": {
         "type": "object",
         "properties": {
-          "type": "object",
-          "description": "New weight",
-          "properties": {
-            "currentWeight": {
-              "type": "object",
-              "properties": {
-                "currentWeight": {
-                  "type": "sting",
-                  "description": "New weight",
-                  "example": 110
-                },
-                "message": {
-                  "type": "sting",
-                  "description": "Status",
-                  "example": "Weight changed"
+          "user": {
+            "type": "object",
+            "properties": {
+              "dailyGoalElements": {
+                "type": "object",
+                "properties": {
+                  "protein": {
+                    "type": "integer",
+                    "description": "User's daily goal for protein intake"
+                  },
+                  "fat": {
+                    "type": "integer",
+                    "description": "User's daily goal for fat intake"
+                  },
+                  "carbonohidrates": {
+                    "type": "integer",
+                    "description": "User's daily goal for carbohydrates intake"
+                  }
                 }
+              },
+              "_id": {
+                "type": "string",
+                "description": "User ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email address"
+              },
+              "password": {
+                "type": "string",
+                "description": "User's password hash"
+              },
+              "token": {
+                "type": "string",
+                "description": "User's authentication token"
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "URL of user's avatar image"
+              },
+              "verify": {
+                "type": "boolean",
+                "description": "Verification status"
+              },
+              "verificationToken": {
+                "type": "string",
+                "description": "Token used for verification"
+              },
+              "goal": {
+                "type": "string",
+                "description": "User's goal"
+              },
+              "sex": {
+                "type": "string",
+                "description": "User's gender"
+              },
+              "age": {
+                "type": "integer",
+                "description": "User's age"
+              },
+              "height": {
+                "type": "integer",
+                "description": "User's height"
+              },
+              "currentWeight": {
+                "type": "integer",
+                "description": "User's current weight"
+              },
+              "levelActivity": {
+                "type": "integer",
+                "description": "User's activity level"
+              },
+              "dailyGoalCalories": {
+                "type": "integer",
+                "description": "User's daily goal for calories intake"
+              },
+              "dailyGoalWater": {
+                "type": "integer",
+                "description": "User's daily goal for water intake"
               }
             }
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message"
           }
         },
         "example": {
-          "currentWeight": 110,
+          "user": {
+            "dailyGoalElements": {
+              "protein": 236,
+              "fat": 70,
+              "carbonohidrates": 393
+            },
+            "_id": "6580e36b2e9c9a23a28c844f",
+            "name": "MaksBora",
+            "email": "maksTest@ukr.net",
+            "password": "$2a$10$Jaz7FBM0AGU8GFtKG0Fc6.7NqGBbsgZZpYN9QgDAkZ0QqJlwz4LQi",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODBlMzZiMmU5YzlhMjNhMjhjODQ0ZiIsImlhdCI6MTcwMzUzOTgxNCwiZXhwIjoyMDE5MTE1ODE0fQ.JwIIhNhbACrhmiQG6bss4E9jOtQmoec1sT0WCbfKrW4",
+            "avatarUrl": "https://res.cloudinary.com/dou7da1tx/image/upload/v1703545203/avatars/avatar3.jpg.jpg",
+            "verify": true,
+            "verificationToken": "8TgmBwYb3RJnyC1AyAPaG",
+            "goal": "Maintain",
+            "sex": "male",
+            "age": 31,
+            "height": 190,
+            "currentWeight": 120,
+            "levelActivity": 3,
+            "dailyGoalCalories": 3769,
+            "dailyGoalWater": 3950
+          },
           "message": "Weight changed"
         }
       },
+
       "WaterPostResponse": {
         "type": "object",
         "properties": {
@@ -1363,6 +1522,7 @@
               "properties": {
                 "date": {
                   "type": "string",
+                  "format": "date",
                   "example": "2023-11-01"
                 },
                 "water": {
@@ -1379,29 +1539,121 @@
                 }
               }
             }
+          },
+          "totalWater": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-12-18"
+                },
+                "water": {
+                  "type": "number",
+                  "example": 1500
+                },
+                "id": {
+                  "type": "string",
+                  "example": "6580e93f4c18eb148d84bcab"
+                }
+              }
+            }
+          },
+          "totalCalories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-12-19"
+                },
+                "totalCalories": {
+                  "type": "number",
+                  "example": 4200
+                },
+                "id": {
+                  "type": "string",
+                  "example": "6583296ee2bae70c0a23a46a"
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "6584cba91abe1a67c718c1a0"
+              },
+              "April": {
+                "type": "array",
+                "items": {}
+              },
+              "August": {
+                "type": "array",
+                "items": {}
+              },
+              "December": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "date": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2023-12-21"
+                    },
+                    "weight": {
+                      "type": "number",
+                      "example": 90
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "6584cba9fbff167e61a80213"
+                    }
+                  }
+                }
+              },
+              "February": {
+                "type": "array",
+                "items": {}
+              },
+              "January": {
+                "type": "array",
+                "items": {}
+              }
+            }
           }
         },
         "example": {
-          "stats": [
+          "totalWater": [
             {
-              "date": "2023-11-01",
-              "water": 1550,
-              "weight": 55,
-              "totalCalories": 1800
-            },
-            {
-              "date": "2023-11-02",
-              "water": 1350,
-              "weight": 0,
-              "totalCalories": 1700
-            },
-            {
-              "date": "2023-11-03",
-              "water": 1400,
-              "weight": 0,
-              "totalCalories": 1950
+              "date": "2023-12-18",
+              "water": 1500,
+              "id": "6580e93f4c18eb148d84bcab"
             }
-          ]
+          ],
+          "totalCalories": [
+            {
+              "date": "2023-12-19",
+              "totalCalories": 4200,
+              "id": "6583296ee2bae70c0a23a46a"
+            }
+          ],
+          "user": {
+            "_id": "6584cba91abe1a67c718c1a0",
+            "December": [
+              {
+                "date": "2023-12-21",
+                "weight": 90,
+                "_id": "6584cba9fbff167e61a80213"
+              }
+            ]
+          }
         }
       },
 

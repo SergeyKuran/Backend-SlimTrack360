@@ -5,6 +5,10 @@ import { HttpError } from '../helpers/Error/HttpError.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
 import { UserWeight } from '../models/userWeight.js';
 import authServices from '../services/authServices.js';
+import { User } from '../models/user.js';
+import jwt from 'jsonwebtoken';
+
+const { SECRET_KEY } = process.env;
 
 const { BASE_URL } = process.env;
 
@@ -53,10 +57,11 @@ const passwordForgot = async (req, res) => {
   const forgotPassword = {
     to: `${email}`,
     subject: 'Reset password!',
-    text: `You new password: ${password}! Please login again!`,
+    text: `You new password: ${password} Please login again!`,
   };
 
   await sendEmail(forgotPassword);
+  console.log(forgotPassword);
 
   res.json({ message: 'New password send on your email' });
 };
@@ -67,12 +72,54 @@ const signout = async (req, res) => {
   res.json({ message: 'Logout successful' });
 };
 
+// ----- verification with redirect ---- //
 const verify = async (req, res) => {
   const { verificationToken } = req.params;
+  console.log('verificationToken Controller>>>>>', verificationToken);
 
-  await authServices.verifyEmail(verificationToken);
+  const user = await User.findOne({ verificationToken });
+  console.log('Service >>>>', user);
 
-  res.send(`${documentSucssesfullVerification()}`);
+  if (!user) throw HttpError(404, 'Verification not succsesfull try again');
+
+  const payload = {
+    id: user._id,
+  };
+
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
+
+  const status = token ? 'fulfilled' : 'rejected';
+  console.log('status>>>>', status);
+  await User.findByIdAndUpdate(
+    user._id,
+    {
+      verify: true,
+      verificationToken: null,
+      token: token,
+    },
+    { new: true },
+  );
+
+  res.json({
+    user: {
+      name: user.name,
+      email: user.email,
+      avatarUrl: user.avatarUrl,
+      goal: user.goal,
+      sex: user.sex,
+      age: user.age,
+      height: user.height,
+      currentWeight: user.currentWeight,
+      levelActivity: user.levelActivity,
+      dailyGoalCalories: user.dailyGoalCalories,
+      dailyGoalWater: user.dailyGoalWater,
+      dailyGoalElements: user.dailyGoalElements,
+
+      status,
+      verify: user.verify,
+    },
+    token,
+  });
 };
 
 const googleAuth = async (req, res) => {
@@ -83,6 +130,31 @@ const googleAuth = async (req, res) => {
     `http://localhost:5173/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
   );
 };
+
+// {
+//     "user": {
+//         "name": "rob",
+//         "email": "rbowdech@gmail.com",
+//         "avatarUrl": "",
+//         "goal": "Lose Fat",
+//         "sex": "female",
+//         "age": 33,
+//         "height": 190,
+//         "currentWeight": 90,
+//         "levelActive": 2,
+//         "dailyGoalCalories": 2372,
+//         "dailyGoalWater": 3050,
+//         "dailyGoalElements": {
+//             "carbonohidrates": 1305,
+//             "protein": 593,
+//             "fat": 474
+//         },
+//         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGQ3ZDkwODhlZDMwNTM3MTI0ZTE5ZiIsImlhdCI6MTcwMzc3MTU0NSwiZXhwIjoyMDE5MzQ3NTQ1fQ.G3n7GZ1LGZEnXEm0WtIwIw2R1m7GUCsI6ZtRJ79YhTE",
+//         "status": "fulfilled",
+//         "verify": false
+//     }
+// }
+
 
 export default {
   signup: ctrlWrapper(signUp),

@@ -8,12 +8,12 @@ export const calculateMacros = (user, dailyGoalCalories) => {
       fatPercentage = 0.2;
       break;
     case 'Maintain':
-      proteinPercentage = 0.3;
-      fatPercentage = 0.2;
-      break;
-    case 'Gain Muscle':
       proteinPercentage = 0.2;
       fatPercentage = 0.25;
+      break;
+    case 'Gain Muscle':
+      proteinPercentage = 0.3;
+      fatPercentage = 0.2;
       break;
     default:
       proteinPercentage = 0.25;
