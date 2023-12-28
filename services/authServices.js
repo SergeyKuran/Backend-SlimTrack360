@@ -170,9 +170,16 @@ const google = async id => {
   };
 
   const token = await jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
-  await User.findByIdAndUpdate({ _id: id }, { token }, { new: true });
 
-  return token;
+  const verificationToken = nanoid();
+
+  await User.findByIdAndUpdate(
+    { _id: id },
+    { token, verificationToken },
+    { new: true },
+  );
+
+  return verificationToken;
 };
 
 const authServices = {
@@ -180,7 +187,6 @@ const authServices = {
   signIn,
   passwordReset,
   logout,
-  verifyEmail,
   google,
 };
 

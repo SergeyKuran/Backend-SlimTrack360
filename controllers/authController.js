@@ -77,10 +77,10 @@ const verify = async (req, res) => {
 
 const googleAuth = async (req, res) => {
   const { _id: id } = req.user;
-  const token = await authServices.google(id);
+  const verificationToken = await authServices.google(id);
 
   res.redirect(
-    `https://maksymbora.github.io/team-project-SlimTrack360/main?token=${token}`,
+    `https://localhost:5173/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
   );
 };
 
