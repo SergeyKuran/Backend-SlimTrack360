@@ -7,6 +7,9 @@ import { UserWeight } from '../models/userWeight.js';
 import authServices from '../services/authServices.js';
 import { User } from '../models/user.js';
 import jwt from 'jsonwebtoken';
+import { dayNormaWater } from '../decorators/dayNormaWater.js';
+import { determinationDailyLevel } from '../decorators/determinationDailyLevel.js';
+import { calculateMacros } from '../decorators/calculateMacroElem.js';
 
 const { SECRET_KEY } = process.env;
 
@@ -123,38 +126,52 @@ const verify = async (req, res) => {
 };
 
 const googleAuth = async (req, res) => {
-  const { _id: id } = req.user;
-  const verificationToken = await authServices.google(id);
+  const { _id, currentWeight } = req.user;
+  const verificationToken = await authServices.google(_id);
+
+  const dailyGoalWater = dayNormaWater(req.user);
+  const dailyGoalCalories = determinationDailyLevel(req.user);
+  const { protein, fat, carbonohidrates } = calculateMacros(
+    req.user,
+    dailyGoalCalories,
+  );
+
+  await User.findByIdAndUpdate(
+    { _id },
+    {
+      dailyGoalWater,
+      dailyGoalCalories,
+      dailyGoalElements: { protein, fat, carbonohidrates },
+    },
+  );
+
+  // ------ Add weight in userWeight Model ----- //
+
+  const formattedDate = format(new Date(), 'yyyy-MM-dd');
+
+  const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+  const owner = _id;
+  const userWeight = await UserWeight.findOne({ owner });
+
+  if (!userWeight) {
+    const newUserWeight = new UserWeight({
+      owner,
+      [currentMonth]: [{ date: formattedDate, weight: currentWeight }],
+    });
+
+    await newUserWeight.save();
+  } else {
+    userWeight[currentMonth].push({
+      date: formattedDate,
+      weight: currentWeight,
+    });
+    await userWeight.save();
+  }
 
   res.redirect(
-    `http://localhost:5173/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
+    `https://maksymbora.github.io/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
   );
 };
-
-// {
-//     "user": {
-//         "name": "rob",
-//         "email": "rbowdech@gmail.com",
-//         "avatarUrl": "",
-//         "goal": "Lose Fat",
-//         "sex": "female",
-//         "age": 33,
-//         "height": 190,
-//         "currentWeight": 90,
-//         "levelActive": 2,
-//         "dailyGoalCalories": 2372,
-//         "dailyGoalWater": 3050,
-//         "dailyGoalElements": {
-//             "carbonohidrates": 1305,
-//             "protein": 593,
-//             "fat": 474
-//         },
-//         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGQ3ZDkwODhlZDMwNTM3MTI0ZTE5ZiIsImlhdCI6MTcwMzc3MTU0NSwiZXhwIjoyMDE5MzQ3NTQ1fQ.G3n7GZ1LGZEnXEm0WtIwIw2R1m7GUCsI6ZtRJ79YhTE",
-//         "status": "fulfilled",
-//         "verify": false
-//     }
-// }
-
 
 export default {
   signup: ctrlWrapper(signUp),
