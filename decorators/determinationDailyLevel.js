@@ -15,13 +15,22 @@ export const determinationDailyLevel = user => {
     throw HttpError(400, 'Level not found');
   }
 
+  const weightIndexMale = 13.397 * currentWeight;
+  const heightIndexMale = 4.799 * height;
+  const ageIndexMale = 5.677 * age;
+
+  const weightIndexFemale = 9.247 * currentWeight;
+  const heightIndexFemale = 3.098 * height;
+  const ageIndexMaleFemale = 4.33 * age;
   if (sex === 'male') {
+    // resultMale =
+    //   (88.362 + 13.397 * currentWeight + 4.799 * height - 5.677 * age) *
+    //   activeIndex;
     resultMale =
-      (88.362 + 13.397 * currentWeight + 4.799 * height - 5.677 * age) *
-      activeIndex;
+      (88.362 + weightIndexMale + heightIndexMale - ageIndexMale) * activeIndex;
   } else {
     resultFemale =
-      (447.593 + 9.247 * currentWeight + 3.098 * height - 4.33 * age) *
+      (447.593 + weightIndexFemale + heightIndexFemale - ageIndexMaleFemale) *
       activeIndex;
   }
 
