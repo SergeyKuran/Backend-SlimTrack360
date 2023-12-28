@@ -44,18 +44,17 @@ const googleCallBack = async (
 
 const googleStrategy = new GoogleStrategy(googleParams, googleCallBack);
 
-// Серіалізація та десеріалізація користувача для збереження його у сесії
-// passport.serializeUser((user, done) => {
-//   done(null, user.id);
-// });
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
 
-// passport.deserializeUser(async (id, done) => {
-//   try {
-//     const user = await User.findById(id);
-//     done(null, user);
-//   } catch (error) {
-//     done(error, null);
-//   }
-// });
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
 
 export const pass = passport.use('google', googleStrategy);
