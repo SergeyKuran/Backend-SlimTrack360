@@ -1,4 +1,4 @@
-export const documentSucssesfullVerification = () => {
+export const documentSucssesfullVerification = verificationToken => {
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +55,7 @@ export const documentSucssesfullVerification = () => {
 <body>
   <div class="container">
     <h1>Verification Successful!</h1>
-    <p>Your account has been successfully verified. You can now <a target="_blank" href="https://maksymbora.github.io/team-project-SlimTrack360/signin">Sign In</a></p>
+    <p>Your account has been successfully verified. You can now <a target="_blank" href="http://localhost:4173/team-project-SlimTrack360/verify?searchQuery=${verificationToken}">Sign In</a></p>
   </div>
 </body>
 </html>`;

@@ -8,6 +8,7 @@ import { HttpError } from '../helpers/Error/HttpError.js';
 import { calculateMacros } from '../decorators/calculateMacroElem.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
 import { generateVerificationEmailHTML } from '../helpers/generateVerificationEmailHTML.js';
+import { documentSucssesfullVerification } from '../helpers/documentSucssesfullVarification.js';
 
 const { SECRET_KEY, BASE_URL } = process.env;
 
@@ -29,7 +30,7 @@ const signUp = async body => {
   const date = new Date();
   const verificationToken = nanoid();
 
-  const document = generateVerificationEmailHTML(verificationToken, BASE_URL);
+  const document = generateVerificationEmailHTML(verificationToken);
 
   const verifyEmail = {
     to: `${email}`,
@@ -127,39 +128,6 @@ const passwordReset = async email => {
   return newPassword;
 };
 
-const verifyEmail = async verificationToken => {
-  const user = await User.findOne({ verificationToken });
-
-  if (!user) throw HttpError(404, 'Verification not succsesfull try again');
-
-  await User.findByIdAndUpdate(
-    { _id: user._id },
-    { verify: true },
-    { new: true },
-  );
-
-  const payload = {
-    id: user._id,
-  };
-
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '10 years' });
-
-  const status = token ? 'fulfilled' : 'rejected';
-
-  const newUser = await User.findByIdAndUpdate(
-    user._id,
-    {
-      verify: true,
-      verificationToken: null,
-      token,
-      status,
-    },
-    { new: true },
-  );
-
-  return newUser;
-};
-
 const logout = async userId => {
   const user = await User.findByIdAndUpdate({ _id: userId }, { token: '' });
   if (!user) throw HttpError(404, 'User not found');
@@ -170,7 +138,6 @@ const authServices = {
   signIn,
   passwordReset,
   logout,
-  verifyEmail,
 };
 
 export default authServices;
