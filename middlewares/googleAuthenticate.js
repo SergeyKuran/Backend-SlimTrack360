@@ -4,12 +4,12 @@ import { User } from '../models/user.js';
 import { nanoid } from 'nanoid';
 import bcrypt from 'bcrypt';
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL } = process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
 const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: `${BASE_URL}/api/auth/google/callback`,
+  callbackURL: `https://healthyhub-emsa.onrender.com/api/auth/google/callback`,
   passReqToCallback: true,
 };
 
