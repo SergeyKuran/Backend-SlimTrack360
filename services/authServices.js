@@ -126,7 +126,7 @@ const passwordReset = async email => {
     { password: hashNewPassword },
   );
 
-  return newPassword;
+  return updatedPass;
 };
 
 const logout = async userId => {
