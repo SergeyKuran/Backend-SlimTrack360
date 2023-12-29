@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
 import { ctrlWrapper } from '../decorators/ctrlWrapper.js';
-import { documentSucssesfullVerification } from '../helpers/documentSucssesfullVarification.js';
 import { HttpError } from '../helpers/Error/HttpError.js';
 import { sendEmail } from '../helpers/sendFromPost.js';
 import { UserWeight } from '../models/userWeight.js';
@@ -11,9 +10,7 @@ import { dayNormaWater } from '../decorators/dayNormaWater.js';
 import { determinationDailyLevel } from '../decorators/determinationDailyLevel.js';
 import { calculateMacros } from '../decorators/calculateMacroElem.js';
 
-const { SECRET_KEY } = process.env;
-
-const { BASE_URL } = process.env;
+const { SECRET_KEY, BASE_URL_GIT } = process.env;
 
 const signUp = async (req, res) => {
   const newUser = await authServices.signUp(req.body);
@@ -165,9 +162,7 @@ const googleAuth = async (req, res) => {
     await userWeight.save();
   }
 
-  res.redirect(
-    `https://maksymbora.github.io/team-project-SlimTrack360/verify?searchQuery=${verificationToken}`,
-  );
+  res.redirect(`${BASE_URL_GIT}/verify?searchQuery=${verificationToken}`);
 };
 
 export default {
