@@ -6,63 +6,6 @@ import {
 } from '../constans/userConstants.js';
 import { handleMongooseError } from '../helpers/Error/handleMongooseError.js';
 
-// ----------- Schema for User Params Model -----------//
-// export const userParamsSchema = new Schema(
-//   {
-//     goal: {
-//       type: String,
-//       require: true,
-//       enum: userParametrs.usersGoal,
-//       default: 'Lose Fat',
-//     },
-//     sex: {
-//       type: String,
-//       enum: userParametrs.userSex,
-//     },
-//     age: {
-//       type: Number,
-//       require: true,
-//     },
-//     height: {
-//       type: Number,
-//       min: userParametrs.minHeight,
-//     },
-//     currentWeight: {
-//       type: Number,
-//       min: userParametrs.minCurrentWeight,
-//     },
-//     levelActivity: {
-//       type: Number,
-//       enum: userParametrs.levelActivityTypes,
-//     },
-//     dailyGoalCalories: {
-//       type: Number,
-//       default: 0,
-//     },
-//     dailyGoalWater: {
-//       type: Number,
-//       default: 0,
-//     },
-//     dailyGoalElements: {
-//       carbonohidrates: {
-//         type: Number,
-//         default: 0,
-//       },
-//       protein: {
-//         type: Number,
-//         default: 0,
-//       },
-//       fat: {
-//         type: Number,
-//         default: 0,
-//       },
-//     },
-//   },
-//   { versionKey: false, _id: false },
-// );
-
-// ----------- Schema for User Model -----------//
-
 const userSchema = new Schema(
   {
     name: {

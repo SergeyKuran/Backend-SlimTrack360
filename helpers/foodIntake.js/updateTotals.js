@@ -30,14 +30,12 @@ export const updateIntakeTotals = async intake => {
     intake[section].totalCarbonohidretes = total.totalCarbonohidretes;
     intake[section].totalProtein = total.totalProtein;
 
-    // Суммируем общее количество калорий, жиров, белков и углеводов из каждого раздела
     totalAllCalories += total.totalCalories;
     totalAllFat += total.totalFat;
     totalAllProtein += total.totalProtein;
     totalAllCarbs += total.totalCarbonohidretes;
   }
 
-  // Записываем общие суммы в основной объект
   intake.totalCalories = totalAllCalories;
   intake.totalFat = totalAllFat;
   intake.totalProtein = totalAllProtein;
