@@ -5,11 +5,19 @@
     "title": "Healthyhub",
     "description": "Track your calories and stay in good shape."
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "servers": [
-    { "url": "https://healthyhub-emsa.onrender.com/api" },
-    { "url": "http://localhost:3000/api" }
+    {
+      "url": "https://slim-track-360.onrender.com/api"
+    },
+    {
+      "url": "http://localhost:3000/api"
+    }
   ],
   "tags": [
     {
@@ -21,14 +29,14 @@
       "description": "Users endpoints"
     }
   ],
-
   "paths": {
     "/auth/signup": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Sign up new user",
         "parameters": [],
-
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -76,7 +84,9 @@
     },
     "/auth/signin": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Sign in existing user",
         "parameters": [],
         "requestBody": {
@@ -126,10 +136,16 @@
     },
     "/auth/signout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Signs out user",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "User signed out"
@@ -149,7 +165,9 @@
     },
     "/auth/forgot-password": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User forgot his password",
         "parameters": [],
         "requestBody": {
@@ -160,7 +178,9 @@
               "schema": {
                 "type": "object",
                 "description": "User's email",
-                "required": ["email"],
+                "required": [
+                  "email"
+                ],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -219,10 +239,16 @@
     },
     "/user/current": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get information about the current user",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Logged user returned",
@@ -259,10 +285,16 @@
     },
     "/user/update": {
       "put": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update profile settings",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "Update Profile Settings",
           "required": true,
@@ -298,10 +330,16 @@
     },
     "/user/goal": {
       "put": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update user goal",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "New user goal",
           "required": true,
@@ -309,11 +347,17 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["goal"],
+                "required": [
+                  "goal"
+                ],
                 "properties": {
                   "goal": {
                     "type": "string",
-                    "enum": ["Lose Fat", "Maintain", "Gain Muscle"]
+                    "enum": [
+                      "Lose Fat",
+                      "Maintain",
+                      "Gain Muscle"
+                    ]
                   }
                 }
               }
@@ -346,10 +390,16 @@
     },
     "/user/weight": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Create and update the user's current weight",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "Current weight",
           "required": true,
@@ -357,7 +407,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["currentWeight"],
+                "required": [
+                  "currentWeight"
+                ],
                 "properties": {
                   "date": {
                     "type": "string",
@@ -397,13 +449,18 @@
         }
       }
     },
-
     "/user/food-intake": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Information about consumed food",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "Creates an object about the food eaten by the user for the current date",
           "required": true,
@@ -411,7 +468,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["date"],
+                "required": [
+                  "date"
+                ],
                 "properties": {
                   "date": {
                     "type": "string",
@@ -450,12 +509,17 @@
           }
         }
       },
-
       "delete": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Delete information about the consumed food of the corresponding food intake",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {},
         "responses": {
           "200": {
@@ -479,10 +543,11 @@
         }
       }
     },
-
     "/user/food-intake/{foodIntakeId}": {
       "put": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update information about consumed food by identifier (foodIntakeId) ",
         "parameters": [
           {
@@ -493,7 +558,11 @@
             "description": "foodIntake's id"
           }
         ],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "Creates an object about the food eaten by the user for the current date",
           "required": true,
@@ -531,10 +600,16 @@
     },
     "/user/water-intake": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Adding the water consumed by the user for the current date",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "Value water",
           "required": true,
@@ -542,7 +617,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["water"],
+                "required": [
+                  "water"
+                ],
                 "properties": {
                   "water": {
                     "type": "number",
@@ -577,10 +654,16 @@
         }
       },
       "delete": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Delete information about the consumed food for the current date",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "Deletes consumed food data for the current date",
           "required": true,
@@ -631,13 +714,18 @@
         }
       }
     },
-
     "/user/statistics": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get statistics of the user for the selected period",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
           "description": "Selected period",
           "required": true,
@@ -645,7 +733,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["month"],
+                "required": [
+                  "month"
+                ],
                 "properties": {
                   "month": {
                     "type": "string",
@@ -680,10 +770,11 @@
         }
       }
     },
-
     "/recommended-food": {
       "get": {
-        "tags": ["Recommended food"],
+        "tags": [
+          "Recommended food"
+        ],
         "summary": "List of recommended products",
         "parameters": [],
         "responses": {
@@ -711,7 +802,6 @@
       }
     }
   },
-
   "components": {
     "schemas": {
       "RegistrationRequest": {
@@ -747,13 +837,20 @@
           "goal": {
             "type": "string",
             "description": "User's goal",
-            "enum": ["Lose Fat", "Maintain", "Gain Muscle"],
+            "enum": [
+              "Lose Fat",
+              "Maintain",
+              "Gain Muscle"
+            ],
             "example": "Lose Fat"
           },
           "sex": {
             "type": "string",
             "description": "User's gender",
-            "enum": ["female", "male"],
+            "enum": [
+              "female",
+              "male"
+            ],
             "example": "female"
           },
           "age": {
@@ -793,7 +890,10 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": ["password", "email"],
+        "required": [
+          "password",
+          "email"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -1000,7 +1100,10 @@
           "sex": {
             "type": "string",
             "description": "User's gender",
-            "enum": ["female", "male"],
+            "enum": [
+              "female",
+              "male"
+            ],
             "example": "female"
           },
           "age": {
@@ -1138,7 +1241,6 @@
           "message": "Goal changed"
         }
       },
-
       "WeightResponse": {
         "type": "object",
         "properties": {
@@ -1260,7 +1362,6 @@
           "message": "Weight changed"
         }
       },
-
       "WaterPostResponse": {
         "type": "object",
         "properties": {
@@ -1297,7 +1398,6 @@
               "description": "Object's id",
               "example": "6582fa0045d5b370656133f2"
             },
-
             "properties": {
               "date": {
                 "type": "string",
@@ -1318,7 +1418,6 @@
           "value": 0
         }
       },
-
       "FoodPostRequest": {
         "type": "object",
         "properties": {
@@ -1328,7 +1427,12 @@
             "properties": {
               "name": {
                 "type": "string",
-                "enum": ["breakfast", "lunch", "dinner", "snack"],
+                "enum": [
+                  "breakfast",
+                  "lunch",
+                  "dinner",
+                  "snack"
+                ],
                 "example": "breakfast"
               },
               "dish": {
@@ -1407,7 +1511,12 @@
             "properties": {
               "name": {
                 "type": "string",
-                "enum": ["breakfast", "lunch", "dinner", "snack"],
+                "enum": [
+                  "breakfast",
+                  "lunch",
+                  "dinner",
+                  "snack"
+                ],
                 "example": "breakfast"
               },
               "dish": {
@@ -1656,7 +1765,6 @@
           }
         }
       },
-
       "ErrorBadRequestResponse": {
         "type": "object",
         "properties": {
@@ -1732,7 +1840,6 @@
           }
         }
       },
-
       "ArrayAllFoodResponse": {
         "type": "array",
         "items": {
@@ -1800,7 +1907,6 @@
         ]
       }
     },
-
     "securitySchemes": {
       "Bearer": {
         "type": "http",

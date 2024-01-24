@@ -55,7 +55,7 @@ export const documentSucssesfullVerification = verificationToken => {
 <body>
   <div class="container">
     <h1>Verification Successful!</h1>
-    <p>Your account has been successfully verified. You can now <a target="_blank" href="http://localhost:5173/Frontend-SlimTrack360//verify?searchQuery=${verificationToken}">Sign In</a></p>
+    <p>Your account has been successfully verified. You can now <a target="_blank" href="http://localhost:5173/Frontend-SlimTrack360/verify?searchQuery=${verificationToken}">Sign In</a></p>
   </div>
 </body>
 </html>`;
